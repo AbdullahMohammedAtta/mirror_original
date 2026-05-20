@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/utils/block_observer.dart';
-import 'package:mirror_original/features/auth/view/login_page.dart';
-import 'package:mirror_original/features/auth/view_model/auth_cubit.dart';
+import 'package:mirror_original/features/home/view_model/home_cubit.dart';
+import 'package:mirror_original/features/splash/view/splash_page.dart';
 import 'firebase_options.dart';
 
 void main() async
@@ -22,15 +22,51 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(),
+      create: (context) => HomeCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+            colorScheme: .fromSeed(seedColor: Colors.black),
       ),
-      home: LoginPage(),
+      home: SplashPage(),
       ),
     );
   }
 }
+
+
+
+// lib/
+// │
+// ├── core/
+// │   ├── services/
+// │   ├── theme/
+// │   ├── utils/
+// │   └── widgets/
+// │
+// ├── features/
+// │   │
+// │   ├── auth/
+// │   │   ├── model/
+// │   │   ├── view/
+// │   │   ├── view_model/
+// │   │   └── widgets/
+// │   │
+// │   ├── home/
+// │   │   ├── model/
+// │   │   ├── view/
+// │   │   ├── view_model/
+// │   │   └── widgets/
+// │   │
+// │   ├── cart/
+// │   │   ├── view/
+// │   │   ├── view_model/
+// │   │   └── widgets/
+// │   │
+// │   └── profile/
+// │       ├── view/
+// │       ├── view_model/
+// │       └── widgets/
+// │
+// └── main.dart
 
