@@ -73,7 +73,7 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 25,),
+                      const SizedBox(height: 15,),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -102,7 +102,7 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 25,),
+                      const SizedBox(height: 15,),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -131,7 +131,7 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 25,),
+                      const SizedBox(height: 15,),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -225,7 +225,7 @@ class RegisterPage extends StatelessWidget {
                       //     ),
                       //   ],
                       // ),
-                      const SizedBox(height: 30,),
+                      const SizedBox(height: 20,),
                       Row(
                         children: [
                           Expanded(
@@ -255,7 +255,7 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30,),
+                      const SizedBox(height: 20,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -272,7 +272,7 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30,),
+                      const SizedBox(height: 20,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

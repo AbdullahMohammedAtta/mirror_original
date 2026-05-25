@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirror_original/core/utils/functions.dart';
+import 'package:mirror_original/features/auth/view/login_page.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
 
@@ -43,6 +45,41 @@ class HomePage extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
+            drawer: Drawer(
+              width: MediaQuery.sizeOf(context).width*0.8,
+              semanticLabel: 'my Drawer sssss',
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: const Text(
+                            'ABU MOUSA',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 1,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 70,
+                          height: 2,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    TextButton.icon(onPressed: (){
+                      navigateTo(context, LoginPage());
+                    }, label: Text("Login"),)
+                  ],
+                ),
+              ),
+            ),
             appBar: buildAppBar(),
             body: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -75,10 +112,6 @@ class HomePage extends StatelessWidget {
   PreferredSizeWidget buildAppBar() {
     return AppBar(
       elevation: 1,
-      leading: IconButton(
-        icon: const Icon(Icons.menu, color: Colors.black, size: 28),
-        onPressed: () {},
-      ),
       title: Column(
         children: [
           const Text(
@@ -331,10 +364,10 @@ class HomePage extends StatelessWidget {
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         decoration: BoxDecoration(
           color: homeCubit.selectedNavBarIndex==index ? const Color(0xFF0F1014) : Colors.transparent,
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
