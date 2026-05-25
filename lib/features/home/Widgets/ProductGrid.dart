@@ -9,12 +9,12 @@ Widget buildProductGrid(List<ProductModel> products) {
     itemCount: products.length,
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
-      childAspectRatio: 0.50,
+      childAspectRatio: 0.54,
       crossAxisSpacing: 14,
       mainAxisSpacing: 16,
     ),
     itemBuilder: (context, index) {
-      return buildProductCard(products[index]);
+      return buildProductCard(products[index],context);
     },
   );
 }
