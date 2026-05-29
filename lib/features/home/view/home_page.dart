@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirror_original/core/widgets/myDivider.dart';
 import 'package:mirror_original/features/home/Widgets/AppBar.dart';
 import 'package:mirror_original/features/home/Widgets/BottomNavigationBar.dart';
 import 'package:mirror_original/features/home/Widgets/Categories.dart';
@@ -100,6 +101,91 @@ class HomePage extends StatelessWidget {
       isFavorite: true,
       soldCount: 50,
     ),
+    ProductModel(
+      id: 4,
+      title: 'WOW AIR',
+      description: 'Comfort yes shoes',
+      brand: 'Hock',
+      category: 'Casual',
+      price: 210,
+      oldPrice: 260,
+      discount: 0,
+      mainImage: 'https://z.nooncdn.com/products/tr:n-t_400/pzsku/Z403E4F04AF89D9417200Z/45/_/1692000748/7c3ba674-7f31-4d53-b8ef-a3a00a24fb2c.jpg',
+      images: [],
+      rating: 5,
+      reviewsCount: 50,
+      stock: 0,
+      isAvailable: true,
+      sizes: [41, 42, 43, 44, 45],
+      colors: ['Blue','red','black'],
+      isFeatured: true,
+      isFavorite: true,
+      soldCount: 50,
+    ),
+    ProductModel(
+      id: 4,
+      title: 'WOW AIR',
+      description: 'Comfort yes shoes',
+      brand: 'Hock',
+      category: 'Casual',
+      price: 210,
+      oldPrice: 260,
+      discount: 0,
+      mainImage: 'https://z.nooncdn.com/products/tr:n-t_400/pzsku/Z403E4F04AF89D9417200Z/45/_/1692000748/7c3ba674-7f31-4d53-b8ef-a3a00a24fb2c.jpg',
+      images: [],
+      rating: 5,
+      reviewsCount: 50,
+      stock: 0,
+      isAvailable: true,
+      sizes: [41, 42, 43, 44, 45],
+      colors: ['Blue','red','black'],
+      isFeatured: true,
+      isFavorite: true,
+      soldCount: 50,
+    ),
+    ProductModel(
+      id: 1,
+      title: 'VORTEX RACER 01',
+      description: 'Premium running shoes',
+      brand: 'Nike',
+      category: 'Running',
+      price: 180,
+      oldPrice: 220,
+      discount: 20,
+      mainImage:
+      'https://www.momofootwear.com/cdn/shop/files/41_1880x.jpg?v=1770654566',
+      images: [],
+      rating: 4.8,
+      reviewsCount: 120,
+      stock: 10,
+      isAvailable: true,
+      sizes: [40, 41, 42, 43],
+      colors: ['Black', 'White'],
+      isFeatured: true,
+      isFavorite: false,
+      soldCount: 90,
+    ),
+    ProductModel(
+      id: 2,
+      title: 'ZENITH RUNNER',
+      description: 'Comfort everyday shoes',
+      brand: 'Adidas',
+      category: 'Casual',
+      price: 210,
+      oldPrice: 260,
+      discount: 15,
+      mainImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKcg5IQHdtQNyWx2VhBggAngH0ZcjlurzTQ&s',
+      images: [],
+      rating: 4.6,
+      reviewsCount: 80,
+      stock: 0,
+      isAvailable: false,
+      sizes: [41, 42, 43, 44, 45],
+      colors: ['Blue'],
+      isFeatured: true,
+      isFavorite: true,
+      soldCount: 50,
+    ),
   ];
 
   @override
@@ -110,11 +196,11 @@ class HomePage extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromRGBO(233, 255, 254, 1.0),
           drawer: buildDrawer(context),
           appBar: buildAppBar(),
           body: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -122,7 +208,9 @@ class HomePage extends StatelessWidget {
                 buildSearchBar(),
                 const SizedBox(height: 25),
                 buildPromoBanner(),
-                const SizedBox(height: 25),
+                const SizedBox(height: 15),
+                myDivider(),
+                const SizedBox(height: 15),
                 buildCategories(homeCubit, context),
                 const SizedBox(height: 25),
                 Row(
