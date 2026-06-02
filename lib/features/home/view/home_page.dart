@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
         return Scaffold(
           backgroundColor: Color.fromRGBO(255, 255, 255, 1.0),
           drawer: buildDrawer(context),
-          appBar: buildAppBar(),
+          appBar: buildAppBar(context),
           body: homeCubit.screens[homeCubit.selectedNavBarIndex],
           bottomNavigationBar: buildBottomNavigationBar(homeCubit),
         );

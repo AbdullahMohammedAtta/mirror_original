@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mirror_original/core/utils/functions.dart';
+import 'package:mirror_original/features/favourites/view/favourite_page.dart';
 
-PreferredSizeWidget buildAppBar() {
+PreferredSizeWidget buildAppBar(context) {
   return AppBar(
     elevation: 0,
     backgroundColor: Colors.white,
@@ -23,7 +25,9 @@ PreferredSizeWidget buildAppBar() {
     ),
     actions: [
       IconButton(
-        onPressed: () {},
+        onPressed: () {
+          navigateTo(context, FavouritePage());
+        },
         icon: const Icon(Icons.favorite_border_outlined, color: Colors.black),
       ),
       const SizedBox(width: 10),
