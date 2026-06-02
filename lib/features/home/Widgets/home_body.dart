@@ -3,7 +3,6 @@ import 'package:mirror_original/core/widgets/myDivider.dart';
 import 'package:mirror_original/features/home/Widgets/Categories.dart';
 import 'package:mirror_original/features/home/Widgets/ProductGrid.dart';
 import 'package:mirror_original/features/home/Widgets/PromoBanner.dart';
-import 'package:mirror_original/features/home/Widgets/SearchBar.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 
@@ -186,7 +185,6 @@ class homeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var homeCubit = HomeCubit.get(context);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -200,7 +198,7 @@ class homeBody extends StatelessWidget {
           const SizedBox(height: 15),
           myDivider(),
           const SizedBox(height: 15),
-          buildCategories(homeCubit, context),
+          buildCategories(),
           const SizedBox(height: 25),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
