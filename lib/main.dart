@@ -16,7 +16,7 @@ void main() async
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
 
-  uId = CacheHelper.getData(key: 'uId')??'';
+  //uId = CacheHelper.getData(key: 'uId')??'';
 
   runApp(const MyApp());
 }

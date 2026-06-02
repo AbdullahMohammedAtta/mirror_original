@@ -12,9 +12,8 @@ Widget buildBottomNavigationBar(HomeCubit homeCubit) {
       children: [
         buildNavItem(homeCubit, Icons.home_outlined, 'Home', 0),
         buildNavItem(homeCubit, Icons.search, 'Search', 1),
-        buildNavItem(homeCubit, Icons.favorite_border, 'Favorites', 2),
-        buildNavItem(homeCubit, Icons.shopping_cart_outlined, 'Cart', 3),
-        buildNavItem(homeCubit, Icons.person_outline, 'Profile', 4),
+        buildNavItem(homeCubit, Icons.shopping_cart_outlined, 'Cart', 2),
+        buildNavItem(homeCubit, Icons.person_outline, 'Profile', 3),
       ],
     ),
   );

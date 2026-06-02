@@ -24,7 +24,7 @@ PreferredSizeWidget buildAppBar() {
     actions: [
       IconButton(
         onPressed: () {},
-        icon: const Icon(Icons.notifications_none, color: Colors.black),
+        icon: const Icon(Icons.favorite_border_outlined, color: Colors.black),
       ),
       const SizedBox(width: 10),
     ],
