@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
           listener: (context, state) {
             if(state is LoginErrorState)
             {
-              showToast(message: 'error', state: ToastState.error);
+              showToast(message: state.error, state: ToastState.error);
             }
             if(state is LoginSuccessState)
             {
@@ -164,6 +164,7 @@ class LoginPage extends StatelessWidget {
                                           'Login',
                                           style: TextStyle(
                                             color: Colors.white,
+                                            fontSize: 16,
                                           ),
                                         ),
                                         condition: state is! LoginLoadingState,

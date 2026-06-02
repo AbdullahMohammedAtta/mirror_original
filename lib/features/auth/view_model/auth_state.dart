@@ -22,7 +22,11 @@ class LoginErrorState extends AuthState {
 
 class RegisterLoadingState extends AuthState {}
 
-class RegisterSuccessState extends AuthState {}
+class RegisterSuccessState extends AuthState {
+  final String uId;
+
+  RegisterSuccessState({required this.uId});
+}
 
 class RegisterErrorState extends AuthState {
   final String error;

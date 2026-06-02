@@ -1,7 +1,12 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/features/auth/view_model/auth_cubit.dart';
 import 'package:mirror_original/features/auth/view_model/auth_state.dart';
+
+import '../../../core/utils/cache_helper.dart';
+import '../../../core/utils/constants.dart';
+import '../../../core/utils/functions.dart';
 
 
 class RegisterPage extends StatelessWidget {
@@ -16,7 +21,24 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit,AuthState>(
-      listener: (context, state) {},
+      listener: (context, state)  {
+        if(state is RegisterErrorState)
+        {
+          showToast(message: state.error, state: ToastState.error);
+        }
+        if(state is RegisterSuccessState)
+        {
+          showToast(message: 'Register successfully', state: ToastState.success);
+          CacheHelper.saveData(
+              key: 'uId',
+              value: state.uId
+          ).then((value)
+          {
+            Navigator.pop(context);
+          }
+          );
+        }
+      },
       builder: (context, state) {
         var authCubit = AuthCubit.get(context);
 
@@ -236,7 +258,20 @@ class RegisterPage extends StatelessWidget {
                                   color: Colors.blue.shade300
                               ),
                               child: MaterialButton(
-                                  child:const Text('Register',style: TextStyle(color: Colors.white,fontSize: 24,),),
+                                  child:ConditionalBuilder(
+                                    builder: (context) => Text(
+                                      'Register',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    condition: state is! RegisterLoadingState,
+                                    fallback:(context) => Center(child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: CircularProgressIndicator(color: Colors.white,),
+                                    )),
+                                  ),
                                   onPressed: (){
                                     if(formKey.currentState!.validate())
                                     {

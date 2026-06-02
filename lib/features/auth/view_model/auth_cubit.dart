@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/features/auth/model/user_model.dart';
 import 'package:mirror_original/features/auth/view_model/auth_state.dart';
 
+
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
@@ -19,24 +20,20 @@ class AuthCubit extends Cubit<AuthState> {
   {
     emit(LoginLoadingState());
 
-    try {
       await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
+      ).then((onValue){
+
+        emit(LoginSuccessState(uId: onValue.user!.uid));
+        print('User ID is : ${onValue.user!.uid}');
+
+    }).catchError((onError)
+      {
+        emit(LoginErrorState(onError.message ?? 'Login Error'));
+      }
       );
 
-      emit(LoginSuccessState(uId: ''));
-
-    } on FirebaseAuthException catch (e) {
-
-      emit(
-        LoginErrorState(
-          e.message ?? 'Login Error',
-        ),
-      );
-
-      debugPrint(e.toString());
-    }
   }
 
   // ================= REGISTER =================
@@ -70,8 +67,8 @@ class AuthCubit extends Cubit<AuthState> {
           .doc(userModel.uId)
           .set(userModel.toJson());
 
-      emit(RegisterSuccessState());
-
+      emit(RegisterSuccessState(uId: userModel.uId));
+      print('User ID is : ${userModel.uId}');
     } on FirebaseAuthException catch (e) {
 
       emit(
@@ -112,7 +109,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   // ================= PASSWORD VISIBILITY =================
 
-  bool isVisible = false;
+  bool isVisible = true;
 
   void changeIcon() {
 

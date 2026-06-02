@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mirror_original/core/utils/cache_helper.dart';
+import 'package:mirror_original/core/utils/constants.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
 
 import '../../../core/widgets/myDivider.dart';
@@ -80,7 +82,11 @@ Widget buildProductCard(ProductModel product,context) {
                     backgroundColor: Color.fromRGBO(
                         200, 200, 200, 0.5019607843137255),
                     radius: 15,
-                    child:IconButton(onPressed: (){}, icon:  Icon(
+                    child:IconButton(onPressed: (){
+
+                      print('User uId  : ${CacheHelper.getData(key: 'uId')} ');
+
+                    }, icon:  Icon(
                       product.isFavorite
                           ? Icons.favorite
                           : Icons.favorite_border,

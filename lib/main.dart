@@ -6,6 +6,7 @@ import 'package:mirror_original/core/utils/cache_helper.dart';
 import 'package:mirror_original/features/auth/view_model/auth_cubit.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import 'package:mirror_original/features/splash/view/splash_page.dart';
+import 'core/utils/constants.dart';
 import 'firebase_options.dart';
 
 void main() async
@@ -14,6 +15,8 @@ void main() async
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
+
+  uId = CacheHelper.getData(key: 'uId')??'';
 
   runApp(const MyApp());
 }
