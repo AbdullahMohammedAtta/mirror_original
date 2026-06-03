@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mirror_original/core/utils/functions.dart';
+import 'package:mirror_original/features/admin/view/add_product_page.dart';
 
 class AdminScreen extends StatelessWidget {
   const AdminScreen({super.key});
@@ -8,7 +10,9 @@ class AdminScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffF5F7FA),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          navigateTo(context, AddProductScreen());
+        },
         icon: const Icon(Icons.add),
         label: const Text('Add Product'),
       ),
