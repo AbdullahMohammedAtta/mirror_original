@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mirror_original/features/home/model/product_model.dart';
 
 class AddProductScreen extends StatelessWidget {
   AddProductScreen({super.key});
@@ -108,6 +107,10 @@ class AddProductScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: ()
                   {
+
+                    // FirebaseFirestore.instance
+                    //     .collection('products')
+                    //     .add(product.toJson());
 
                   },
                   child: const Text(
