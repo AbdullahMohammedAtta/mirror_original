@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mirror_original/core/utils/functions.dart';
-import 'package:mirror_original/features/home/view/home_page.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
