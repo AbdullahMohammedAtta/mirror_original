@@ -1,7 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mirror_original/core/utils/cache_helper.dart';
+import 'package:mirror_original/core/services/cache_helper.dart';
 import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/features/auth/view/register_page.dart';
 import 'package:mirror_original/features/auth/view_model/auth_cubit.dart';
