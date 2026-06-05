@@ -79,7 +79,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     try {
       /// Upload Main Image
       /// final mainImageUrl = await uploadImage(mainImage!);
-
       /// Upload Gallery Images
       /// List<String> galleryUrls = [];
 
@@ -337,6 +336,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           setState(() {
                             galleryImages
                                 .removeAt(index);
+
+
                           });
                         },
                         child: Container(

@@ -84,8 +84,7 @@ Widget buildProductCard(ProductModel product,context) {
                       ),
                     Spacer(),
                     CircleAvatar(
-                      backgroundColor: Color.fromRGBO(
-                          200, 200, 200, 0.5019607843137255),
+                      backgroundColor: Colors.grey.shade200,
                       radius: 15,
                       child:IconButton(onPressed: (){
 

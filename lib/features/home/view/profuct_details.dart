@@ -25,29 +25,22 @@ class ProductDetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 1. Image Header Section
-            Container(
+            SizedBox(
               width: double.infinity,
-              height: 300,
-              color: const Color(0xFFE0E0E0), // Grey background for image area
+              height: MediaQuery.sizeOf(context).height*0.33,
               child: Stack(
                 children: [
                   // Sneaker Image Placeholder
-                  Center(
-                    child: Icon(
-                      Icons.snowshoeing, // Placeholder for the actual shoe image
-                      size: 150,
-                      color: Colors.grey.shade400,
-                    ),
-                    /* // Replace the Icon above with this for a real image:
-                    Image.network(
-                      'YOUR_IMAGE_URL_HERE',
-                      fit: BoxFit.cover,
-                    ),
-                    */
+                  SizedBox(
+                    width: double.infinity,
+                    height: MediaQuery.sizeOf(context).height*0.3,
+                    child: Image.network('https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg'
+                      , fit: BoxFit.cover,),
+
                   ),
                   // Pagination Dots
                   Positioned(
-                    bottom: 20,
+                    bottom: 10,
                     left: 0,
                     right: 0,
                     child: Row(
@@ -104,10 +97,10 @@ class ProductDetailPage extends StatelessWidget {
                           color: Colors.grey.shade200,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
+                        child: IconButton(onPressed: (){}, icon: Icon(
                           Icons.favorite_border,
-                          size: 24,
-                        ),
+                          size: 28,
+                        ),)
                       ),
                     ],
                   ),
@@ -147,11 +140,12 @@ class ProductDetailPage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        _buildSizeButton('US 7', false),
-                        _buildSizeButton('US 8', false),
-                        _buildSizeButton('US 9', true), // Selected State
-                        _buildSizeButton('US 10', false),
-                        _buildSizeButton('US 11', false),
+                        _buildSizeButton('40', false),
+                        _buildSizeButton('41', false),
+                        _buildSizeButton('42', true), // Selected State
+                        _buildSizeButton('43', false),
+                        _buildSizeButton('44', false),
+                        _buildSizeButton('45', false),
                       ],
                     ),
                   ),
