@@ -30,6 +30,10 @@ class AdminCubit extends Cubit<AdminStates> {
     }
   }
 
+
+
+
+
   Future<void> pickGalleryImages() async {
     final images = await ImagePicker().pickMultiImage(
       imageQuality: 85,
@@ -44,18 +48,35 @@ class AdminCubit extends Cubit<AdminStates> {
     }
   }
 
-  Future<String> uploadMainImage() {
-    final fileName =
-        '${DateTime.now().millisecondsSinceEpoch}_main.jpg';
 
-    return storage
-        .ref()
-        .child('products/main_images/$fileName')
-        .putFile(mainImage!)
-        .then((taskSnapshot) {
-      return taskSnapshot.ref.getDownloadURL();
-    });
+
+
+  void removeImageFromGalleryImagesList(index)
+  {
+    galleryImages.removeAt(index);
+    emit(AdminRemoveIndexFromGalleryImagesListState());
   }
+
+
+
+
+  Future<String> uploadMainImage() async {
+    if (mainImage == null) {
+      throw Exception("Main image is null");
+    }
+
+    final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('products/main/$fileName');
+
+    final uploadTask = await ref.putFile(mainImage!);
+
+    return await uploadTask.ref.getDownloadURL();
+  }
+
+
 
   Future<List<String>> uploadGalleryImages() {
     List<String> urls = [];
@@ -84,6 +105,10 @@ class AdminCubit extends Cubit<AdminStates> {
 
     return uploadNext(0).then((_) => urls);
   }
+
+
+
+
 
   Future<void> addProduct(ProductModel product) async {
     if (mainImage == null) {

@@ -297,8 +297,7 @@ class AddProductScreen extends StatelessWidget {
                       right: 5,
                       child: GestureDetector(
                         onTap: () {
-                            adminCubit.galleryImages
-                                .removeAt(index);
+                            adminCubit.removeImageFromGalleryImagesList(index);
                         },
                         child: Container(
                           padding:
@@ -307,8 +306,7 @@ class AddProductScreen extends StatelessWidget {
                           decoration:
                           const BoxDecoration(
                             color: Colors.red,
-                            shape:
-                            BoxShape.circle,
+                            shape: BoxShape.circle,
                           ),
                           child: const Icon(
                             Icons.close,

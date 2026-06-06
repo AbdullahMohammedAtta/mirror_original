@@ -5,6 +5,7 @@ class AdminInitial extends AdminStates {}
 class AdminMainImagePickedState extends AdminStates {}
 
 class AdminGalleryImagesPickedState extends AdminStates {}
+class AdminRemoveIndexFromGalleryImagesListState extends AdminStates {}
 
 class AdminLoadingState extends AdminStates {}
 
