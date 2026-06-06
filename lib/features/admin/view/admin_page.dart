@@ -20,7 +20,15 @@ class AdminScreen extends StatelessWidget {
               backgroundColor: const Color(0xffF5F7FA),
               floatingActionButton: FloatingActionButton.extended(
                 onPressed: () {
-                  navigateTo(context, AddProductScreen());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BlocProvider(
+                        create: (_) => AdminCubit(),
+                        child: AddProductScreen(),
+                      ),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.add),
                 label: const Text('Add Product'),
