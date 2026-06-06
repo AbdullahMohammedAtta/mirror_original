@@ -9,7 +9,7 @@ import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 
 final List<ProductModel> trendingProducts = [
   ProductModel(
-    id: 1,
+    id: '1',
     title: 'VORTEX RACER 01',
     description: 'Premium running shoes',
     brand: 'Nike',
@@ -31,7 +31,7 @@ final List<ProductModel> trendingProducts = [
     soldCount: 90,
   ),
   ProductModel(
-    id: 2,
+    id: '2',
     title: 'ZENITH RUNNER',
     description: 'Comfort everyday shoes',
     brand: 'Adidas',
@@ -52,7 +52,7 @@ final List<ProductModel> trendingProducts = [
     soldCount: 50,
   ),
   ProductModel(
-    id: 3,
+    id: '3',
     title: 'star RUNNER',
     description: 'Comfort yes shoes',
     brand: 'Adidas',
@@ -73,7 +73,7 @@ final List<ProductModel> trendingProducts = [
     soldCount: 50,
   ),
   ProductModel(
-    id: 4,
+    id: '4',
     title: 'WOW AIR',
     description: 'Comfort yes shoes',
     brand: 'Hock',
@@ -94,7 +94,7 @@ final List<ProductModel> trendingProducts = [
     soldCount: 50,
   ),
   ProductModel(
-    id: 4,
+    id: '4',
     title: 'WOW AIR',
     description: 'Comfort yes shoes',
     brand: 'Hock',
@@ -115,7 +115,7 @@ final List<ProductModel> trendingProducts = [
     soldCount: 50,
   ),
   ProductModel(
-    id: 4,
+    id: '4',
     title: 'WOW AIR',
     description: 'Comfort yes shoes',
     brand: 'Hock',
@@ -136,7 +136,7 @@ final List<ProductModel> trendingProducts = [
     soldCount: 50,
   ),
   ProductModel(
-    id: 1,
+    id: '1',
     title: 'VORTEX RACER 01',
     description: 'Premium running shoes',
     brand: 'Nike',
@@ -158,7 +158,7 @@ final List<ProductModel> trendingProducts = [
     soldCount: 90,
   ),
   ProductModel(
-    id: 2,
+    id: '2',
     title: 'ZENITH RUNNER',
     description: 'Comfort everyday shoes',
     brand: 'Adidas',

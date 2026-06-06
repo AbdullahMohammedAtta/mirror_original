@@ -10,7 +10,7 @@ Widget buildProductGrid(List<ProductModel> products) {
     itemCount: products.length,
     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
       maxCrossAxisExtent: 220,
-      childAspectRatio: 0.60,
+      childAspectRatio: 0.56,
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
     ),

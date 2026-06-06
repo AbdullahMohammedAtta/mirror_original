@@ -1,5 +1,5 @@
 class ProductModel {
-  final int id;
+  final String id;
 
   // Basic Info
   final String title;
@@ -40,7 +40,7 @@ class ProductModel {
     required this.brand,
     required this.category,
     required this.price,
-    this.oldPrice,
+    required this.oldPrice,
     required this.discount,
     required this.mainImage,
     required this.images,
