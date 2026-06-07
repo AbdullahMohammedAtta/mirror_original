@@ -158,8 +158,15 @@ class AddProductScreen extends StatelessWidget {
                                     reviewsCount: 0,
                                     stock: int.tryParse(stockController.text,) ?? 0,
                                     isAvailable: true,
-                                    sizes: [],
-                                    colors: [],
+                                  sizes: sizesController.text
+                                      .split(',')
+                                      .map((e) => int.tryParse(e.trim()) ?? 0)
+                                      .toList(),
+                                    colors: colorsController.text
+                                        .split(',')
+                                        .map((e) => e.trim())
+                                        .where((e) => e.isNotEmpty)
+                                        .toList(),
                                     isFeatured: false,
                                     isFavorite: false,
                                     soldCount: 0,

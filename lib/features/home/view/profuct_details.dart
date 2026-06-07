@@ -34,7 +34,7 @@ class ProductDetailPage extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     height: MediaQuery.sizeOf(context).height*0.3,
-                    child: Image.network('https://gratisography.com/wp-content/uploads/2024/11/gratisography-augmented-reality-800x525.jpg'
+                    child: Image.network('https://res.cloudinary.com/dp0i2qyhg/image/upload/b_gen_fill,c_pad,h_1.00,w_1.50/Partha_Sarathi_Dash_A_lion_siting_on_a_chair_and_reading_the_ne_70446fc5-d0e7-4f4a-aebf-7b604d4e564d_kw2pqf'
                       , fit: BoxFit.cover,),
 
                   ),
