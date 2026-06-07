@@ -30,10 +30,6 @@ class AdminCubit extends Cubit<AdminStates> {
     }
   }
 
-
-
-
-
   Future<void> pickGalleryImages() async {
     final images = await ImagePicker().pickMultiImage(
       imageQuality: 85,
@@ -48,124 +44,108 @@ class AdminCubit extends Cubit<AdminStates> {
     }
   }
 
-
-
-
-  void removeImageFromGalleryImagesList(index)
-  {
+  void removeImageFromGalleryImagesList(int index) {
     galleryImages.removeAt(index);
     emit(AdminRemoveIndexFromGalleryImagesListState());
   }
 
-
-
-
   Future<String> uploadMainImage() async {
     if (mainImage == null) {
-      throw Exception("Main image is null");
+      throw Exception('Please select main image');
     }
 
-    final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+    final fileName =
+        '${DateTime.now().millisecondsSinceEpoch}.jpg';
 
-    final ref = FirebaseStorage.instance
+    final ref = storage
         .ref()
         .child('products/main/$fileName');
 
-    final uploadTask = await ref.putFile(mainImage!);
+    final snapshot = await ref.putFile(mainImage!);
 
-    return await uploadTask.ref.getDownloadURL();
+    return await snapshot.ref.getDownloadURL();
   }
 
-
-
-  Future<List<String>> uploadGalleryImages() {
+  Future<List<String>> uploadGalleryImages() async {
     List<String> urls = [];
 
-    Future<void> uploadNext(int index) {
-      if (index >= galleryImages.length) {
-        return Future.value();
-      }
-
-      final file = galleryImages[index];
+    for (int i = 0; i < galleryImages.length; i++) {
+      final file = galleryImages[i];
 
       final fileName =
-          '${DateTime.now().millisecondsSinceEpoch}_$index.jpg';
+          '${DateTime.now().millisecondsSinceEpoch}_$i.jpg';
 
-      return storage
+      final snapshot = await storage
           .ref()
           .child('products/gallery_images/$fileName')
-          .putFile(file)
-          .then((snapshot) {
-        return snapshot.ref.getDownloadURL();
-      }).then((url) {
-        urls.add(url);
-        return uploadNext(index + 1);
-      });
+          .putFile(file);
+
+      final url = await snapshot.ref.getDownloadURL();
+
+      urls.add(url);
     }
 
-    return uploadNext(0).then((_) => urls);
+    return urls;
   }
 
-
-
-
-
   Future<void> addProduct(ProductModel product) async {
-    if (mainImage == null) {
-      emit(
-        AdminErrorState(
-          'Please select main image',
-        ),
-      );
-      return;
-    }
-
-    emit(AdminLoadingState());
-
-    uploadMainImage()
-        .then((mainImageUrl) {
-      return uploadGalleryImages().then((galleryUrls) {
-        final docRef =
-        firestore.collection('products').doc();
-
-        final newProduct = ProductModel(
-          id: docRef.id,
-          title: product.title,
-          description: product.description,
-          brand: product.brand,
-          category: product.category,
-          price: product.price,
-          oldPrice: product.oldPrice,
-          discount: product.discount,
-          mainImage: mainImageUrl,
-          images: galleryUrls,
-          rating: product.rating,
-          reviewsCount: product.reviewsCount,
-          stock: product.stock,
-          isAvailable: product.isAvailable,
-          sizes: product.sizes,
-          colors: product.colors,
-          isFeatured: product.isFeatured,
-          isFavorite: product.isFavorite,
-          soldCount: product.soldCount,
+    try {
+      if (mainImage == null) {
+        emit(
+          AdminErrorState(
+            'Please select main image',
+          ),
         );
+        return;
+      }
 
-        return docRef.set({
-          "firebaseId": docRef.id,
-          ...newProduct.toJson(),
-        });
+      emit(AdminLoadingState());
+
+      final mainImageUrl = await uploadMainImage();
+
+      final galleryUrls = await uploadGalleryImages();
+
+      final docRef = firestore
+          .collection('products')
+          .doc();
+
+      final newProduct = ProductModel(
+        id: docRef.id,
+        title: product.title,
+        description: product.description,
+        brand: product.brand,
+        category: product.category,
+        price: product.price,
+        oldPrice: product.oldPrice,
+        discount: product.discount,
+        mainImage: mainImageUrl,
+        images: galleryUrls,
+        rating: product.rating,
+        reviewsCount: product.reviewsCount,
+        stock: product.stock,
+        isAvailable: product.isAvailable,
+        sizes: product.sizes,
+        colors: product.colors,
+        isFeatured: product.isFeatured,
+        isFavorite: product.isFavorite,
+        soldCount: product.soldCount,
+      );
+
+      await docRef.set({
+        "firebaseId": docRef.id,
+        ...newProduct.toJson(),
       });
-    }).then((_) {
+
       mainImage = null;
       galleryImages.clear();
 
       emit(AdminSuccessState());
-    }).catchError((error) {
+    } catch (error) {
       emit(
         AdminErrorState(
           error.toString(),
         ),
       );
-    });
+    }
   }
 }
