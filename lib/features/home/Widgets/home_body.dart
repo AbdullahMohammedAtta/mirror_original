@@ -5,7 +5,6 @@ import 'package:mirror_original/core/widgets/myDivider.dart';
 import 'package:mirror_original/features/home/Widgets/Categories.dart';
 import 'package:mirror_original/features/home/Widgets/ProductGrid.dart';
 import 'package:mirror_original/features/home/Widgets/PromoBanner.dart';
-import 'package:mirror_original/features/home/model/product_model.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
 
