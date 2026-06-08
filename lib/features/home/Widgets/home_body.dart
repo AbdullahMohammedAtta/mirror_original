@@ -1,222 +1,66 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/widgets/myDivider.dart';
 import 'package:mirror_original/features/home/Widgets/Categories.dart';
 import 'package:mirror_original/features/home/Widgets/ProductGrid.dart';
 import 'package:mirror_original/features/home/Widgets/PromoBanner.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
+import 'package:mirror_original/features/home/view_model/home_cubit.dart';
+import 'package:mirror_original/features/home/view_model/home_state.dart';
 
 
-final List<ProductModel> trendingProducts = [
-  ProductModel(
-    id: '1',
-    title: 'VORTEX RACER 01',
-    description: 'Premium running shoes',
-    brand: 'Nike',
-    category: 'Running',
-    price: 180,
-    oldPrice: 220,
-    discount: 20,
-    mainImage:
-    'https://www.momofootwear.com/cdn/shop/files/41_1880x.jpg?v=1770654566',
-    images: [],
-    rating: 4.8,
-    reviewsCount: 120,
-    stock: 10,
-    isAvailable: true,
-    sizes: [40, 41, 42, 43, 44, 45],
-    colors: ['Black', 'White'],
-    isFeatured: true,
-    isFavorite: false,
-    soldCount: 90,
-  ),
-  ProductModel(
-    id: '2',
-    title: 'ZENITH RUNNER',
-    description: 'Comfort everyday shoes',
-    brand: 'Adidas',
-    category: 'Casual',
-    price: 210,
-    oldPrice: 260,
-    discount: 15,
-    mainImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKcg5IQHdtQNyWx2VhBggAngH0ZcjlurzTQ&s',
-    images: [],
-    rating: 4.6,
-    reviewsCount: 80,
-    stock: 0,
-    isAvailable: true,
-    sizes: [41, 42, 43, 44, 45],
-    colors: ['Blue'],
-    isFeatured: true,
-    isFavorite: true,
-    soldCount: 50,
-  ),
-  ProductModel(
-    id: '3',
-    title: 'star RUNNER',
-    description: 'Comfort yes shoes',
-    brand: 'Adidas',
-    category: 'Casual',
-    price: 210,
-    oldPrice: 260,
-    discount: 30,
-    mainImage: 'https://cdn.flightclub.com/TEMPLATE/259664/1.jpg',
-    images: [],
-    rating: 5,
-    reviewsCount: 50,
-    stock: 0,
-    isAvailable: true,
-    sizes: [41, 42, 43, 44, 45],
-    colors: ['Blue','white','green'],
-    isFeatured: true,
-    isFavorite: false,
-    soldCount: 50,
-  ),
-  ProductModel(
-    id: '4',
-    title: 'WOW AIR',
-    description: 'Comfort yes shoes',
-    brand: 'Hock',
-    category: 'Casual',
-    price: 210,
-    oldPrice: 260,
-    discount: 0,
-    mainImage: 'https://z.nooncdn.com/products/tr:n-t_400/pzsku/Z403E4F04AF89D9417200Z/45/_/1692000748/7c3ba674-7f31-4d53-b8ef-a3a00a24fb2c.jpg',
-    images: [],
-    rating: 5,
-    reviewsCount: 50,
-    stock: 0,
-    isAvailable: true,
-    sizes: [41, 42, 43, 44, 45],
-    colors: ['Blue','red','black'],
-    isFeatured: true,
-    isFavorite: true,
-    soldCount: 50,
-  ),
-  ProductModel(
-    id: '4',
-    title: 'WOW AIR',
-    description: 'Comfort yes shoes',
-    brand: 'Hock',
-    category: 'Casual',
-    price: 210,
-    oldPrice: 260,
-    discount: 0,
-    mainImage: 'https://z.nooncdn.com/products/tr:n-t_400/pzsku/Z403E4F04AF89D9417200Z/45/_/1692000748/7c3ba674-7f31-4d53-b8ef-a3a00a24fb2c.jpg',
-    images: [],
-    rating: 5,
-    reviewsCount: 50,
-    stock: 0,
-    isAvailable: true,
-    sizes: [41, 42, 43, 44, 45],
-    colors: ['Blue','red','black'],
-    isFeatured: true,
-    isFavorite: true,
-    soldCount: 50,
-  ),
-  ProductModel(
-    id: '4',
-    title: 'WOW AIR',
-    description: 'Comfort yes shoes',
-    brand: 'Hock',
-    category: 'Casual',
-    price: 210,
-    oldPrice: 260,
-    discount: 0,
-    mainImage: 'https://z.nooncdn.com/products/tr:n-t_400/pzsku/Z403E4F04AF89D9417200Z/45/_/1692000748/7c3ba674-7f31-4d53-b8ef-a3a00a24fb2c.jpg',
-    images: [],
-    rating: 5,
-    reviewsCount: 50,
-    stock: 0,
-    isAvailable: true,
-    sizes: [41, 42, 43, 44, 45],
-    colors: ['Blue','red','black'],
-    isFeatured: true,
-    isFavorite: true,
-    soldCount: 50,
-  ),
-  ProductModel(
-    id: '1',
-    title: 'VORTEX RACER 01',
-    description: 'Premium running shoes',
-    brand: 'Nike',
-    category: 'Running',
-    price: 180,
-    oldPrice: 220,
-    discount: 20,
-    mainImage:
-    'https://www.momofootwear.com/cdn/shop/files/41_1880x.jpg?v=1770654566',
-    images: [],
-    rating: 4.8,
-    reviewsCount: 120,
-    stock: 10,
-    isAvailable: true,
-    sizes: [40, 41, 42, 43],
-    colors: ['Black', 'White'],
-    isFeatured: true,
-    isFavorite: false,
-    soldCount: 90,
-  ),
-  ProductModel(
-    id: '2',
-    title: 'ZENITH RUNNER',
-    description: 'Comfort everyday shoes',
-    brand: 'Adidas',
-    category: 'Casual',
-    price: 210,
-    oldPrice: 260,
-    discount: 15,
-    mainImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLKcg5IQHdtQNyWx2VhBggAngH0ZcjlurzTQ&s',
-    images: [],
-    rating: 4.6,
-    reviewsCount: 80,
-    stock: 0,
-    isAvailable: false,
-    sizes: [41, 42, 43, 44, 45],
-    colors: ['Blue'],
-    isFeatured: true,
-    isFavorite: true,
-    soldCount: 50,
-  ),
-];
 
 class homeBody extends StatelessWidget {
   const homeBody({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var homeCubit = HomeCubit.get(context);
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-         //const SizedBox(height: 10),
-         //buildSearchBar(),
-          const SizedBox(height: 25),
-          buildPromoBanner(),
-          const SizedBox(height: 15),
-          myDivider(),
-          const SizedBox(height: 15),
-          buildCategories(),
-          const SizedBox(height: 25),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Trending Now',
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                'View All',
-                style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          buildProductGrid(trendingProducts),
-          const SizedBox(height: 30),
-        ],
-      ),
+    return BlocConsumer<HomeCubit,HomeState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return ConditionalBuilder(
+            condition: state is! GetProductsLoadingState,
+            fallback: (context) => Center(child: CircularProgressIndicator()),
+            builder: (context) {
+              return SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //const SizedBox(height: 10),
+                    //buildSearchBar(),
+                    const SizedBox(height: 25),
+                    buildPromoBanner(),
+                    const SizedBox(height: 15),
+                    myDivider(),
+                    const SizedBox(height: 15),
+                    buildCategories(),
+                    const SizedBox(height: 25),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Trending Now',
+                          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'View All',
+                          style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 15),
+                    buildProductGrid(homeCubit.products),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              );
+            },
+        );
+      },
     );
   }
 }

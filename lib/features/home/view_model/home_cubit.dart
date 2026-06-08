@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/features/cart/view/cart_page.dart';
 import 'package:mirror_original/features/home/Widgets/home_body.dart';
+import 'package:mirror_original/features/home/model/product_model.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
 import 'package:mirror_original/features/profile/view/profile_page.dart';
 import 'package:mirror_original/features/search/view/search_page.dart';
@@ -38,9 +40,36 @@ class HomeCubit extends Cubit<HomeState>{
 
 
 
-  
 
 
+
+  List<ProductModel> products = [];
+
+  Future<void> getProducts() async {
+    emit(GetProductsLoadingState());
+
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .get();
+
+      products = snapshot.docs
+          .map(
+            (e) => ProductModel.fromJson(
+          e.data(),
+        ),
+      )
+          .toList();
+
+      emit(GetProductsSuccessState());
+    } catch (e) {
+      emit(
+        GetProductsErrorState(
+          e.toString(),
+        ),
+      );
+    }
+  }
   
 
 }
