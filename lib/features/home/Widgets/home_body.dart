@@ -24,37 +24,42 @@ class homeBody extends StatelessWidget {
             condition: state is! GetProductsLoadingState,
             fallback: (context) => Center(child: CircularProgressIndicator()),
             builder: (context) {
-              return SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //const SizedBox(height: 10),
-                    //buildSearchBar(),
-                    const SizedBox(height: 25),
-                    buildPromoBanner(),
-                    const SizedBox(height: 15),
-                    myDivider(),
-                    const SizedBox(height: 15),
-                    buildCategories(),
-                    const SizedBox(height: 25),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Trending Now',
-                          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'View All',
-                          style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    buildProductGrid(homeCubit.products),
-                    const SizedBox(height: 30),
-                  ],
+              return RefreshIndicator(
+                onRefresh: (){
+                  return homeCubit.getProducts();
+                },
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //const SizedBox(height: 10),
+                      //buildSearchBar(),
+                      const SizedBox(height: 25),
+                      buildPromoBanner(),
+                      const SizedBox(height: 15),
+                      myDivider(),
+                      const SizedBox(height: 15),
+                      buildCategories(),
+                      const SizedBox(height: 25),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Trending Now',
+                            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            'View All',
+                            style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      buildProductGrid(homeCubit.products),
+                      const SizedBox(height: 30),
+                    ],
+                  ),
                 ),
               );
             },
