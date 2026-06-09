@@ -38,6 +38,11 @@ class HomeCubit extends Cubit<HomeState>{
     emit(ChangeNavBarState());
   }
 
+  int productImagesIndex = 0;
+  void changeImagesIndex(index)
+  {
+    productImagesIndex = index;
+  }
 
 
 

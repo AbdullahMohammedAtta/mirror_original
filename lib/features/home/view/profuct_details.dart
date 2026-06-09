@@ -19,13 +19,13 @@ class ProductDetailPage extends StatelessWidget {
               // 1. Image Header Section
               SizedBox(
                 width: double.infinity,
-                height: MediaQuery.sizeOf(context).height*0.33,
+                height: MediaQuery.sizeOf(context).height*0.36,
                 child: Stack(
                   children: [
                     // Sneaker Image Placeholder
                     SizedBox(
                       width: double.infinity,
-                      height: MediaQuery.sizeOf(context).height*0.3,
+                      height: MediaQuery.sizeOf(context).height*0.36,
                       child: Image.network(product.mainImage, fit: BoxFit.cover,),
           
                     ),
@@ -43,6 +43,40 @@ class ProductDetailPage extends StatelessWidget {
                           child: Icon(Icons.arrow_back,),
                         ))
                   ],
+                ),
+              ),
+
+              SizedBox(height: 10,),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 150,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.blue,
+                            width: 2,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(18), // أقل شوية من الكونتينر
+                          child: Image.network(
+                            product.images[index],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );;
+                    },
+                    separatorBuilder: (context, index) => SizedBox(width: 3,),
+                    itemCount: product.images.length,
+                  ),
                 ),
               ),
           
@@ -139,17 +173,16 @@ class ProductDetailPage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          _buildSizeButton('40', false),
-                          _buildSizeButton('41', false),
-                          _buildSizeButton('42', true), // Selected State
-                          _buildSizeButton('43', false),
-                          _buildSizeButton('44', false),
-                          _buildSizeButton('45', false),
-                        ],
+                    SizedBox(
+                      height: 50,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                            return _buildSizeButton(product.sizes[index].toString(), false);
+                          },
+                        separatorBuilder: (context, index) => SizedBox(width: 3,),
+                        itemCount: product.sizes.length,
                       ),
                     ),
                     const SizedBox(height: 30),
@@ -189,39 +222,37 @@ class ProductDetailPage extends StatelessWidget {
       ),
 
       // 6. Bottom Add to Cart Button
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-          child: ElevatedButton(
-            onPressed: () {
-              print(product.images);
-              print(product.category);
-              print(product.colors);
-              print(product.sizes);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 18),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              elevation: 0,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+        child: ElevatedButton(
+          onPressed: () {
+            print(product.images);
+            print(product.category);
+            print(product.colors);
+            print(product.sizes);
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black,
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.symmetric(vertical: 18),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.shopping_bag_outlined, size: 20),
-                SizedBox(width: 10),
-                Text(
-                  'Add to Cart',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+            elevation: 0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.shopping_bag_outlined, size: 20),
+              SizedBox(width: 10),
+              Text(
+                'Add to Cart',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
