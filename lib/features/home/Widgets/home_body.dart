@@ -25,9 +25,7 @@ class homeBody extends StatelessWidget {
             fallback: (context) => Center(child: CircularProgressIndicator()),
             builder: (context) {
               return RefreshIndicator(
-                onRefresh: (){
-                  return homeCubit.getProducts();
-                },
+                onRefresh: (){return homeCubit.getProducts();},
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(

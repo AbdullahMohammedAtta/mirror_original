@@ -9,7 +9,7 @@ import '../../../core/widgets/myDivider.dart';
 Widget buildProductCard(ProductModel product,context) {
   return InkWell(
     onTap: (){
-      navigateTo(context, ProductDetailPage());
+      navigateTo(context, ProductDetailPage(product));
     },
     child: Card(
       color: Colors.white,
@@ -87,9 +87,7 @@ Widget buildProductCard(ProductModel product,context) {
                       backgroundColor: Colors.grey.shade200,
                       radius: 15,
                       child:IconButton(onPressed: (){
-
                         print('User uId  : ${CacheHelper.getData(key: 'uId')} ');
-
                       }, icon:  Icon(
                         product.isFavorite
                             ? Icons.favorite
@@ -119,23 +117,19 @@ Widget buildProductCard(ProductModel product,context) {
                 Row(
                   children: [
                     const Icon(Icons.star, color: Colors.amber, size: 16),
-                    const SizedBox(width: 4),
                     Text(
                       '${product.rating}',
-                      style: const TextStyle(fontWeight: FontWeight.w600),
+                      style: const TextStyle(fontWeight: FontWeight.w600,fontSize: 13),
                     ),
-                    const SizedBox(width: 4),
                     Text(
                       '(${product.reviewsCount})',
-                      style: const TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.grey,fontSize: 13),
                     ),
                   ],
                 ),
               ],
             ),
           ),
-
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 0),
             child: Text(
@@ -157,7 +151,7 @@ Widget buildProductCard(ProductModel product,context) {
                 ),
               ),
               const SizedBox(width: 6),
-              if (product.oldPrice != null)
+              if (product.oldPrice != 0)
                 Text(
                   '${product.oldPrice}',
                   style: const TextStyle(
