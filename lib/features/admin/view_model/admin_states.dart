@@ -19,5 +19,21 @@ class AdminErrorState extends AdminStates {
 }
 
 
+class GetProductsLoadingState extends AdminStates {}
+class GetProductsSuccessState extends AdminStates {}
+class GetProductsErrorState extends AdminStates {
+  final String error;
+
+  GetProductsErrorState(this.error);
+}
 
 
+class DeleteProductLoadingState extends AdminStates {}
+
+class DeleteProductSuccessState extends AdminStates {}
+
+class DeleteProductErrorState extends AdminStates {
+  final String error;
+
+  DeleteProductErrorState(this.error);
+}

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mirror_original/features/admin/view_model/admin_states.dart';
@@ -136,7 +135,33 @@ class AdminCubit extends Cubit<AdminStates> {
   }
 
 
+  List<ProductModel> products = [];
 
+  Future<void> getProducts() async {
+    emit(GetProductsLoadingState());
+
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .get();
+
+      products = snapshot.docs
+          .map(
+            (e) => ProductModel.fromJson(
+          e.data(),
+        ),
+      )
+          .toList();
+
+      emit(GetProductsSuccessState());
+    } catch (e) {
+      emit(
+        GetProductsErrorState(
+          e.toString(),
+        ),
+      );
+    }
+  }
 
 
 
@@ -202,6 +227,29 @@ class AdminCubit extends Cubit<AdminStates> {
   }
 
 
+
+
+  Future<void> deleteProduct(String productId) async {
+    try {
+
+      emit(DeleteProductLoadingState());
+
+      await firestore
+          .collection('products')
+          .doc(productId)
+          .delete();
+
+      emit(DeleteProductSuccessState());
+
+    } catch (e) {
+
+      emit(
+        DeleteProductErrorState(
+          e.toString(),
+        ),
+      );
+    }
+  }
 
 
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/features/admin/view/add_product_page.dart';
+import 'package:mirror_original/features/admin/view/admin_products_page.dart';
 import 'package:mirror_original/features/admin/view_model/admin_cubit.dart';
 import 'package:mirror_original/features/admin/view_model/admin_states.dart';
 
@@ -10,7 +12,7 @@ class AdminScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => AdminCubit(),
+        create: (context) => AdminCubit()..getProducts(),
       child: BlocConsumer<AdminCubit,AdminStates>(
           listener: (context, state) {},
           builder: (context, state) {
@@ -120,9 +122,25 @@ class AdminScreen extends StatelessWidget {
                         children: [
 
                           Expanded(
-                            child: ActionButton(
-                              title: "Products",
-                              icon: Icons.shopping_bag,
+                            child: GestureDetector(
+                              onTap: ()
+                              {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => BlocProvider.value(
+                                      value: AdminCubit.get(context),
+                                      child: const AdminProductsPage(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: ActionButton(
+
+                                title: "Products",
+                                icon: Icons.shopping_bag,
+
+                              ),
                             ),
                           ),
 
@@ -162,79 +180,9 @@ class AdminScreen extends StatelessWidget {
 
                       const SizedBox(height: 30),
 
-                      const Text(
-                        "Recent Products",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
 
-                      const SizedBox(height: 15),
 
-                      ListView.builder(
-                        itemCount: 6,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (_, index) {
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 12),
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Row(
-                              children: [
 
-                                ClipRRect(
-                                  borderRadius:
-                                  BorderRadius.circular(12),
-                                  child: Image.network(
-                                    "https://picsum.photos/200",
-                                    width: 70,
-                                    height: 70,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-
-                                const SizedBox(width: 12),
-
-                                const Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-
-                                      Text(
-                                        "Nike Air Max",
-                                        style: TextStyle(
-                                          fontWeight:
-                                          FontWeight.bold,
-                                        ),
-                                      ),
-
-                                      SizedBox(height: 5),
-
-                                      Text("\$180"),
-                                    ],
-                                  ),
-                                ),
-
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.edit),
-                                ),
-
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.delete),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
                     ],
                   ),
                 ),
