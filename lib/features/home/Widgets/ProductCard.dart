@@ -9,6 +9,7 @@ import '../../../core/widgets/myDivider.dart';
 Widget buildProductCard(ProductModel product,context) {
   return InkWell(
     onTap: (){
+
       navigateTo(context, ProductDetailPage(product));
     },
     child: Card(
