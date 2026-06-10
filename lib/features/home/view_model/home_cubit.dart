@@ -42,9 +42,14 @@ class HomeCubit extends Cubit<HomeState>{
   void changeImagesIndex(index)
   {
     productImagesIndex = index;
+    emit(ChangeImagesIndexState());
   }
 
-
+  String selectedImage(ProductModel product) {
+    return productImagesIndex == 0
+        ? product.mainImage
+        : product.images[productImagesIndex - 1];
+  }
 
 
 
