@@ -75,7 +75,38 @@ class AdminProductsPage extends StatelessWidget {
 
                         IconButton(
                           onPressed: () {
-                            adminCubit.deleteProduct(adminCubit.products[index].id);
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text(
+                                    'Delete Product',
+                                  ),
+                                  content: const Text(
+                                    'Are you sure?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+
+                                        AdminCubit.get(context)
+                                            .deleteProduct(adminCubit.products[index].id);
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        'Delete',
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
                           icon: const Icon(Icons.delete),
                         ),
