@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/core/widgets/myDivider.dart';
 import 'package:mirror_original/features/admin/view_model/admin_cubit.dart';
 import 'package:mirror_original/features/admin/view_model/admin_states.dart';
@@ -10,7 +11,17 @@ class AdminProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AdminCubit,AdminStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is DeleteProductSuccessState)
+            {
+              showToast(message: "Product deleted successfully", state: ToastState.success);
+            }
+          if (state is DeleteProductErrorState)
+            {
+              showToast(message: state.error, state: ToastState.error);
+            }
+
+        },
         builder: (context, state) {
           var adminCubit = AdminCubit.get(context);
 
