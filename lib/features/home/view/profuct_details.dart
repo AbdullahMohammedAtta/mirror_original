@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/core/widgets/myDivider.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
+import 'package:mirror_original/features/home/view/image_Page.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
 
@@ -31,11 +33,17 @@ class ProductDetailPage extends StatelessWidget {
                       child: Stack(
                         children: [
                           // Sneaker Image Placeholder
-                          SizedBox(
-                            width: double.infinity,
-                            height: MediaQuery.sizeOf(context).height*0.36,
-                            child: Image.network(homeCubit.selectedImage(product), fit: BoxFit.cover,),
+                          GestureDetector(
+                            onTap:()
+                            {
+                              navigateTo(context, ImagePage(homeCubit.selectedImage(product)));
+                            },
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: MediaQuery.sizeOf(context).height*0.36,
+                              child: Image.network(homeCubit.selectedImage(product), fit: BoxFit.cover,),
 
+                            ),
                           ),
                           IconButton(onPressed: ()
                           {
