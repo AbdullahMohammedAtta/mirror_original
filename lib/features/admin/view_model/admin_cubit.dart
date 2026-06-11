@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mirror_original/features/admin/view_model/admin_states.dart';
+import 'package:mirror_original/features/auth/model/user_model.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
 
 class AdminCubit extends Cubit<AdminStates> {
@@ -169,14 +170,14 @@ class AdminCubit extends Cubit<AdminStates> {
     try {
       if (mainImage == null) {
         emit(
-          AdminErrorState(
+          AdminAddProductErrorState(
             'Please select main image',
           ),
         );
         return;
       }
 
-      emit(AdminLoadingState());
+      emit(AdminAddProductLoadingState());
 
       final mainImageUrl = await uploadMainImage();
 
@@ -216,10 +217,10 @@ class AdminCubit extends Cubit<AdminStates> {
       mainImage = null;
       galleryImages.clear();
 
-      emit(AdminSuccessState());
+      emit(AdminAddProductSuccessState());
     } catch (error) {
       emit(
-        AdminErrorState(
+        AdminAddProductErrorState(
           error.toString(),
         ),
       );
@@ -231,7 +232,6 @@ class AdminCubit extends Cubit<AdminStates> {
 
   Future<void> deleteProduct(String productId) async {
     try {
-
       emit(DeleteProductLoadingState());
 
       await firestore
@@ -239,10 +239,13 @@ class AdminCubit extends Cubit<AdminStates> {
           .doc(productId)
           .delete();
 
+      products.removeWhere(
+            (product) => product.id == productId,
+      );
+
       emit(DeleteProductSuccessState());
 
     } catch (e) {
-
       emit(
         DeleteProductErrorState(
           e.toString(),
@@ -251,5 +254,26 @@ class AdminCubit extends Cubit<AdminStates> {
     }
   }
 
+
+
+  List<UserModel> users = [];
+  Future<void> getUsers() async {
+    emit(GetUsersLoadingState());
+
+    try {
+      QuerySnapshot snapshot =
+      await FirebaseFirestore.instance.collection('users').get();
+      print("User is ${snapshot.docs.length}");
+      users = snapshot.docs.map((doc) {
+        return UserModel.fromJson(
+          doc.data() as Map<String, dynamic>,
+        );
+      }).toList();
+
+      emit(GetUsersSuccessState());
+    } catch (e) {
+      emit(GetUsersErrorState(e.toString()));
+    }
+  }
 
 }

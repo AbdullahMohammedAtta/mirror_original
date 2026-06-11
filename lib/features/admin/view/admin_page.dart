@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/utils/functions.dart';
@@ -12,7 +13,7 @@ class AdminScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => AdminCubit()..getProducts(),
+        create: (context) => AdminCubit()..getProducts()..getUsers(),
       child: BlocConsumer<AdminCubit,AdminStates>(
           listener: (context, state) {},
           builder: (context, state) {
@@ -82,22 +83,37 @@ class AdminScreen extends StatelessWidget {
                         childAspectRatio: 1.0,
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 15,
-                        children: const [
-                          DashboardCard(
-                            title: "Products",
-                            value: "128",
-                            icon: Icons.shopping_bag,
+                        children: [
+                          ConditionalBuilder(
+                            condition: state is! GetProductsLoadingState,
+                            fallback: (context) => Center(child: CircularProgressIndicator(),),
+                            builder: (context) {
+                              return DashboardCard(
+                                title: "Products",
+                                value: '${adminCubit.products.length}',
+                                icon: Icons.shopping_bag,
+                              );
+                            },
                           ),
+
                           DashboardCard(
                             title: "Orders",
                             value: "54",
                             icon: Icons.receipt_long,
                           ),
-                          DashboardCard(
-                            title: "Users",
-                            value: "320",
-                            icon: Icons.people,
+
+                          ConditionalBuilder(
+                              condition: state is! GetUsersLoadingState,
+                             fallback: (context) => Center(child: CircularProgressIndicator(),),
+                              builder: (context) {
+                                return DashboardCard(
+                                  title: "Users",
+                                  value: "${adminCubit.users.length}",
+                                  icon: Icons.people,
+                                );
+                              },
                           ),
+
                           DashboardCard(
                             title: "Revenue",
                             value: "\$12K",
@@ -208,27 +224,26 @@ class DashboardCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
-        mainAxisAlignment:
-        MainAxisAlignment.spaceEvenly,
-        children: [
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
 
-          Icon(
-            icon,
-            size: 35,
-          ),
+                Icon(
+                  icon,
+                  size: 35,
+                ),
 
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+                Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
 
-          Text(title),
-        ],
-      ),
-    );
+                Text(title),
+              ],
+        )
+      );
   }
 }
 

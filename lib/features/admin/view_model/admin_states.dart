@@ -8,14 +8,14 @@ class AdminGalleryImagesPickedState extends AdminStates {}
 
 class AdminRemoveIndexFromGalleryImagesListState extends AdminStates {}
 
-class AdminLoadingState extends AdminStates {}
+class AdminAddProductLoadingState extends AdminStates {}
 
-class AdminSuccessState extends AdminStates {}
+class AdminAddProductSuccessState extends AdminStates {}
 
-class AdminErrorState extends AdminStates {
+class AdminAddProductErrorState extends AdminStates {
   final String error;
 
-  AdminErrorState(this.error);
+  AdminAddProductErrorState(this.error);
 }
 
 
@@ -29,11 +29,18 @@ class GetProductsErrorState extends AdminStates {
 
 
 class DeleteProductLoadingState extends AdminStates {}
-
 class DeleteProductSuccessState extends AdminStates {}
-
 class DeleteProductErrorState extends AdminStates {
   final String error;
 
   DeleteProductErrorState(this.error);
+}
+
+
+class GetUsersLoadingState extends AdminStates {}
+class GetUsersSuccessState extends AdminStates {}
+class GetUsersErrorState extends AdminStates {
+  final String error;
+
+  GetUsersErrorState(this.error);
 }

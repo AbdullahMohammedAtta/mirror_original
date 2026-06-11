@@ -30,7 +30,7 @@ class AddProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AdminCubit,AdminStates>(
       listener: (context, state) {
-          if (state is AdminSuccessState) {
+          if (state is AdminAddProductSuccessState) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Product Added Successfully'),
@@ -38,7 +38,7 @@ class AddProductScreen extends StatelessWidget {
             );
           }
 
-          if (state is AdminErrorState) {
+          if (state is AdminAddProductErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.error),
@@ -137,7 +137,7 @@ class AddProductScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 55,
                     child: ElevatedButton.icon(
-                      onPressed: state is AdminLoadingState
+                      onPressed: state is AdminAddProductLoadingState
                           ? null
                           : (){
                           if(formKey.currentState!.validate())
@@ -174,7 +174,7 @@ class AddProductScreen extends StatelessWidget {
                               );
                             }
                       },
-                      icon: state is AdminLoadingState
+                      icon: state is AdminAddProductLoadingState
                           ? const SizedBox(
                         width: 20,
                         height: 20,
@@ -185,7 +185,7 @@ class AddProductScreen extends StatelessWidget {
                       )
                           : const Icon(Icons.save),
                       label: Text(
-                        state is AdminLoadingState
+                        state is AdminAddProductLoadingState
                             ? "Saving..."
                             : "Save Product",
                       ),

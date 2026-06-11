@@ -60,6 +60,7 @@ class AuthCubit extends Cubit<AuthState> {
         email: email,
         phone: phone,
         image: '',
+        isAdmin: false,
       );
 
       await fireStore
