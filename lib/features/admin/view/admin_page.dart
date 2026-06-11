@@ -16,7 +16,7 @@ class AdminScreen extends StatelessWidget {
       child: BlocConsumer<AdminCubit,AdminStates>(
           listener: (context, state) {},
           builder: (context, state) {
-
+              var adminCubit = AdminCubit.get(context);
             return Scaffold(
               backgroundColor: const Color(0xffF5F7FA),
               floatingActionButton: FloatingActionButton.extended(
@@ -125,15 +125,7 @@ class AdminScreen extends StatelessWidget {
                             child: GestureDetector(
                               onTap: ()
                               {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => BlocProvider.value(
-                                      value: AdminCubit.get(context),
-                                      child: const AdminProductsPage(),
-                                    ),
-                                  ),
-                                );
+                                navigateTo(context, AdminProductsPage(adminCubit));
                               },
                               child: ActionButton(
 
