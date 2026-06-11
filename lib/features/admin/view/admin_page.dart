@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/features/admin/view/add_product_page.dart';
 import 'package:mirror_original/features/admin/view/admin_products_page.dart';
+import 'package:mirror_original/features/admin/view/users_page.dart';
 import 'package:mirror_original/features/admin/view_model/admin_cubit.dart';
 import 'package:mirror_original/features/admin/view_model/admin_states.dart';
 
@@ -169,9 +170,14 @@ class AdminScreen extends StatelessWidget {
                         children: [
 
                           Expanded(
-                            child: ActionButton(
-                              title: "Users",
-                              icon: Icons.people,
+                            child: GestureDetector(
+                              onTap: (){
+                                navigateTo(context, UsersPage(adminCubit: adminCubit,));
+                              },
+                              child: ActionButton(
+                                title: "Users",
+                                icon: Icons.people,
+                              ),
                             ),
                           ),
 

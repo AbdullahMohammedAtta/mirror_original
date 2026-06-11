@@ -21,7 +21,7 @@ class UserModel {
     return UserModel(
       uId: json['uId'] ?? '',
       name: json['name'] ?? '',
-      isAdmin: json['isAdmin'] ?? '',
+      isAdmin: json['isAdmin'] ?? false,
       email: json['email'] ?? '',
       phone: json['phone'] ?? '',
       image: json['image'] ?? '',
