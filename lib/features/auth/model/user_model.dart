@@ -24,7 +24,7 @@ class UserModel {
       isAdmin: json['isAdmin'] ?? false,
       email: json['email'] ?? '',
       phone: json['phone'] ?? '',
-      image: json['image'] ?? '',
+      image: json['image'] ?? 'https://static.vecteezy.com/system/resources/previews/007/296/447/non_2x/user-icon-in-flat-style-person-icon-client-symbol-vector.jpg',
     );
   }
 

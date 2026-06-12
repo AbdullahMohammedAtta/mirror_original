@@ -1,6 +1,9 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/utils/functions.dart';
+import 'package:mirror_original/core/widgets/myButton.dart';
 import 'package:mirror_original/features/auth/view/login_page.dart';
 import 'package:mirror_original/features/auth/view_model/auth_cubit.dart';
 import 'package:mirror_original/features/auth/view_model/auth_state.dart';
@@ -20,155 +23,196 @@ class ProfilePage extends StatelessWidget {
         },
         builder: (context, state) {
           var authCubit = AuthCubit.get(context);
-          return Container(
-            color: const Color(0xFFF8F9FB), // Light off-white background
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    // Profile Picture & Edit Badge
-                    Stack(
-                      children: [
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Colors.grey,
-                          backgroundImage: NetworkImage('https://www.acres4dogs.co.uk/wp-content/uploads/2024/12/Doggy-Day-Care-Right-for-Your-Pupp.webp')
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 4,
-                          child: Container(
-                            padding: const EdgeInsets.all(6),
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 2),
-                            ),
-                            child: const Icon(Icons.edit, color: Colors.white, size: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    // Name and Email
-                    const Text(
-                      'Abu Mousa',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF0D1B2A),
+          return ConditionalBuilder(
+              condition: FirebaseAuth.instance.currentUser != null,
+              fallback: (context) =>  Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.lock_outline,
+                        size: 90,
+                        color: Colors.grey,
                       ),
-                    ),
-                    const SizedBox(height: 6),
-                    const Text(
-                      'abumousa.style@example.com',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
+                      const SizedBox(height: 20),
 
-                    const SizedBox(height: 24),
-
-                    // Stats Row
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildStatCard('12', 'Orders'),
-                          const SizedBox(width: 12),
-                          _buildStatCard('4', 'Saved'),
-                          const SizedBox(width: 12),
-                          _buildStatCard('2.4k', 'Points'),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 24),
-
-                    // Menu Items
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Column(
-                        children: [
-                          _buildMenuItem(Icons.shopping_bag_outlined, 'My Orders'),
-                          _buildMenuItem(Icons.location_on_outlined, 'My Addresses'),
-                          _buildMenuItem(Icons.credit_card_outlined, 'Payment Methods'),
-                          _buildMenuItem(Icons.settings_outlined, 'Settings'),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    // Logout Button
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                title: const Text(
-                                  'Do you want to Logout',
-                                ),
-                                content: const Text(
-                                  'Are you sure?',
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                     authCubit.logout();
-                                    },
-                                    child: const Text(
-                                      'Logout',
-                                    ),
-                                  ),
-                                ],
-                              ),
-                          );
-
-                        },
-                        icon: const Icon(Icons.logout, color: Color(0xFFD32F2F)),
-                        label: const Text(
-                          'Logout',
-                          style: TextStyle(
-                            color: Color(0xFFD32F2F),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: Color(0xFFD32F2F), width: 1.5),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          minimumSize: const Size(double.infinity, 50),
+                      const Text(
+                        "You are not logged in",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
 
-                    const SizedBox(height: 32),
+                      const SizedBox(height: 10),
 
-                    // Version Text
-                    const Text(
-                      'Version 1.0.0 (2026)',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
-                    ),
+                      const Text(
+                        "Please login to continue using the app",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey),
+                      ),
 
-                    const SizedBox(height: 32),
-                  ],
+                      const SizedBox(height: 30),
+
+                      myButton('Go to Login',context,LoginPage()),
+                    ],
+                  ),
                 ),
               ),
-            ),
+              builder: (context) {
+                return Container(
+                  color: const Color(0xFFF8F9FB), // Light off-white background
+                  child: SafeArea(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          // Profile Picture & Edit Badge
+                          Stack(
+                            children: [
+                              CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.grey,
+                                  backgroundImage: authCubit.userModel?.image == null  && authCubit.userModel!.image.isNotEmpty ? NetworkImage(authCubit.userModel!.image) : NetworkImage('https://static.vecteezy.com/system/resources/previews/007/296/447/non_2x/user-icon-in-flat-style-person-icon-client-symbol-vector.jpg')
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                right: 4,
+                                child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: Colors.white, width: 2),
+                                  ),
+                                  child: const Icon(Icons.edit, color: Colors.white, size: 16),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          // Name and Email
+                          Text(
+                            authCubit.userModel!.name,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF0D1B2A),
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                           Text(
+                            authCubit.userModel!.email,
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+
+                          const SizedBox(height: 24),
+
+                          // Stats Row
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                _buildStatCard('12', 'Orders'),
+                                const SizedBox(width: 12),
+                                _buildStatCard('4', 'Saved'),
+                                const SizedBox(width: 12),
+                                _buildStatCard('2.4k', 'Points'),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 24),
+
+                          // Menu Items
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Column(
+                              children: [
+                                _buildMenuItem(Icons.shopping_bag_outlined, 'My Orders'),
+                                _buildMenuItem(Icons.location_on_outlined, 'My Addresses'),
+                                _buildMenuItem(Icons.credit_card_outlined, 'Payment Methods'),
+                                _buildMenuItem(Icons.settings_outlined, 'Settings'),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          // Logout Button
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: OutlinedButton.icon(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text(
+                                      'Do you want to Logout',
+                                    ),
+                                    content: const Text(
+                                      'Are you sure?',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          authCubit.logout();
+                                        },
+                                        child: const Text(
+                                          'Logout',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+
+                              },
+                              icon: const Icon(Icons.logout, color: Color(0xFFD32F2F)),
+                              label: const Text(
+                                'Logout',
+                                style: TextStyle(
+                                  color: Color(0xFFD32F2F),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: Color(0xFFD32F2F), width: 1.5),
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                minimumSize: const Size(double.infinity, 50),
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 32),
+
+                          // Version Text
+                          const Text(
+                            'Version 1.0.0 (2026)',
+                            style: TextStyle(color: Colors.grey, fontSize: 14),
+                          ),
+
+                          const SizedBox(height: 32),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
           );
         },
     );
@@ -243,3 +287,10 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+

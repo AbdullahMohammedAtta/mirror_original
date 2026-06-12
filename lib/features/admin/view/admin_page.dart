@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/utils/functions.dart';
+import 'package:mirror_original/core/widgets/myButton.dart';
 import 'package:mirror_original/features/admin/view/add_product_page.dart';
 import 'package:mirror_original/features/admin/view/admin_products_page.dart';
 import 'package:mirror_original/features/admin/view/users_page.dart';
@@ -76,30 +77,7 @@ class AdminPage extends StatelessWidget {
                         ),
                       ),
 
-                      MaterialButton(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.black,
-                                ),
-
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Text('Go to Store',style: TextStyle(color: Colors.white,fontSize: 18)),
-                                  ),
-                                )
-                            ),
-                          ),
-                          onPressed: ()
-                          {
-                            navigateAndFinish(context, HomePage());
-
-                          }
-                      ),
+                      myButton('Go to store',context,HomePage()),
 
                       GridView.count(
                         shrinkWrap: true,
