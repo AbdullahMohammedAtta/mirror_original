@@ -23,8 +23,8 @@ class AuthCubit extends Cubit<AuthState> {
       await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
-      ).then((onValue){
-
+      ).then((onValue) async {
+        await getUserData();
         emit(LoginSuccessState(uId: onValue.user!.uid));
         print('User ID is : ${onValue.user!.uid}');
 

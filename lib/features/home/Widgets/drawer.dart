@@ -11,7 +11,13 @@ import '../../auth/view/login_page.dart';
 
 Widget buildDrawer(BuildContext context) {
   return BlocConsumer<AuthCubit,AuthState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is LogoutSuccessState)
+          {
+            navigateAndFinish(context, LoginPage(),);
+            showToast(message: 'Logout successfully', state: ToastState.success);
+          }
+      },
       builder: (context, state) {
         var authCubit= AuthCubit.get(context);
         return Drawer(
@@ -27,7 +33,7 @@ Widget buildDrawer(BuildContext context) {
                 const SizedBox(height: 10),
                 Container(width: 80, height: 2, color: Colors.black),
                 const Spacer(),
-                if(authCubit.userModel!.isAdmin)
+                if(authCubit.userModel?.isAdmin ?? false)
                   TextButton.icon(
                     onPressed: () {
                       navigateTo(context, AdminPage());
@@ -36,40 +42,8 @@ Widget buildDrawer(BuildContext context) {
                     label: const Text('Admin Dashboard'),
                   ),
                 ConditionalBuilder(
-                  condition: FirebaseAuth.instance.currentUser != null,
-                  fallback: (context) {
-                    return TextButton.icon(
-                      onPressed: () {
-                        AlertDialog(
-                          title: const Text(
-                            'Do you want to Logout',
-                          ),
-                          content: const Text(
-                            'Are you sure?',
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                authCubit.logout();
-                                navigateAndFinish(context, LoginPage());
-                              },
-                              child: const Text(
-                                'Logout',
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                      icon: const Icon(Icons.login),
-                      label: const Text('Logout'),
-                    );
-                  },
+                  condition: FirebaseAuth.instance.currentUser == null,
+
                   builder: (context) {
                     return TextButton.icon(
                       onPressed: () {
@@ -77,6 +51,39 @@ Widget buildDrawer(BuildContext context) {
                       },
                       icon: const Icon(Icons.login),
                       label: const Text('Login'),
+                    );
+                  },
+
+                  fallback: (context) {
+                    return TextButton.icon(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (dialogContext) => AlertDialog(
+                            title: const Text('Do you want to Logout'),
+                            content: const Text('Are you sure?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(dialogContext);
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  await AuthCubit.get(context).logout();
+
+                                  Navigator.pop(dialogContext);
+
+                                },
+                                child: const Text('Logout'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.logout),
+                      label: const Text('Logout'),
                     );
                   },
                 ),

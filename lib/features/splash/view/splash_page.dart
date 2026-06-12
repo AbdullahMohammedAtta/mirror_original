@@ -29,6 +29,7 @@ class _SplashPageState extends State<SplashPage> {
       {
         await AuthCubit.get(context).getUserData();
 
+
         if(AuthCubit.get(context).userModel!.isAdmin)
         {
           navigateAndFinish(context, AdminPage());
