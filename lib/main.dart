@@ -8,14 +8,12 @@ import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import 'package:mirror_original/features/splash/view/splash_page.dart';
 import 'firebase_options.dart';
 
-void main() async
-{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
-
-  //uId = CacheHelper.getData(key: 'uId')??'';
 
   runApp(const MyApp());
 }
@@ -23,26 +21,29 @@ void main() async
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AuthCubit(),),
-        BlocProvider(create: (context) => HomeCubit()..getProducts(),),
+        BlocProvider(
+          create: (context) => AuthCubit(),
+        ),
+        BlocProvider(
+          create: (context) => HomeCubit()..getProducts(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            colorScheme: .fromSeed(seedColor: Colors.black),
-      ),
-      home: SplashPage(),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.black,
+          ),
+        ),
+        home: SplashPage(),
       ),
     );
   }
 }
-
-
 
 // lib/
 // │

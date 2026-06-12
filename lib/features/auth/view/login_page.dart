@@ -30,14 +30,7 @@ class LoginPage extends StatelessWidget {
           if(state is LoginSuccessState)
           {
             showToast(message: 'Logged in successfully', state: ToastState.success);
-            CacheHelper.saveData(
-                key: 'uId',
-                value: state.uId
-            ).then((value)
-            {
               navigateAndFinish(context, HomePage());
-            }
-            );
           }
         },
         builder: (context, state) {

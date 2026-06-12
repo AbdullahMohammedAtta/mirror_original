@@ -88,7 +88,6 @@ Widget buildProductCard(ProductModel product,context) {
                       backgroundColor: Colors.grey.shade200,
                       radius: 15,
                       child:IconButton(onPressed: (){
-                        print('User uId  : ${CacheHelper.getData(key: 'uId')} ');
                       }, icon:  Icon(
                         product.isFavorite
                             ? Icons.favorite

@@ -129,4 +129,30 @@ class AuthCubit extends Cubit<AuthState> {
   // ================= GET CURRENT USER =================
 
   User? get currentUser => auth.currentUser;
+
+  UserModel? userModel;
+
+  Future<void> getUserData() async {
+
+    emit(GetUserLoadingState());
+
+    try {
+
+      final uid = auth.currentUser!.uid;
+
+      final value = await fireStore
+          .collection('users')
+          .doc(uid)
+          .get();
+
+      userModel = UserModel.fromJson(value.data()!);
+
+      emit(GetUserSuccessState());
+
+    } catch (e) {
+
+      emit(GetUserErrorState(e.toString()));
+
+    }
+  }
 }

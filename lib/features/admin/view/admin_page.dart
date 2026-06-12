@@ -7,9 +7,10 @@ import 'package:mirror_original/features/admin/view/admin_products_page.dart';
 import 'package:mirror_original/features/admin/view/users_page.dart';
 import 'package:mirror_original/features/admin/view_model/admin_cubit.dart';
 import 'package:mirror_original/features/admin/view_model/admin_states.dart';
+import 'package:mirror_original/features/home/view/home_page.dart';
 
-class AdminScreen extends StatelessWidget {
-  const AdminScreen({super.key});
+class AdminPage extends StatelessWidget {
+  const AdminPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,30 @@ class AdminScreen extends StatelessWidget {
                         ),
                       ),
 
-                      const SizedBox(height: 25),
+                      MaterialButton(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.black,
+                                ),
+
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text('Go to Store',style: TextStyle(color: Colors.white,fontSize: 18)),
+                                  ),
+                                )
+                            ),
+                          ),
+                          onPressed: ()
+                          {
+                            navigateAndFinish(context, HomePage());
+
+                          }
+                      ),
 
                       GridView.count(
                         shrinkWrap: true,
@@ -193,7 +217,6 @@ class AdminScreen extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 30),
-
 
 
 

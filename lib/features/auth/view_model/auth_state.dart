@@ -36,3 +36,15 @@ class RegisterErrorState extends AuthState {
 
 
 class ChangeIconState extends AuthState {}
+
+
+
+class GetUserLoadingState extends AuthState {}
+
+class GetUserSuccessState extends AuthState {}
+
+class GetUserErrorState extends AuthState {
+  final String error;
+  GetUserErrorState(this.error);
+}
+

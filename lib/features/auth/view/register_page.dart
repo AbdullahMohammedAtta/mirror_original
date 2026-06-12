@@ -27,14 +27,7 @@ class RegisterPage extends StatelessWidget {
         if(state is RegisterSuccessState)
         {
           showToast(message: 'Register successfully', state: ToastState.success);
-          CacheHelper.saveData(
-              key: 'uId',
-              value: state.uId
-          ).then((value)
-          {
-            Navigator.pop(context);
-          }
-          );
+          Navigator.pop(context);
         }
       },
       builder: (context, state) {

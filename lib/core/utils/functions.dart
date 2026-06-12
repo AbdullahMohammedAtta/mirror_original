@@ -37,7 +37,6 @@ void showToast({
   int durationInSeconds = 3,
 }) {
   Fluttertoast.cancel(); // يمنع تكدس التوستات
-
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,

@@ -1,5 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mirror_original/core/utils/functions.dart';
+import 'package:mirror_original/features/admin/view/admin_page.dart';
+import 'package:mirror_original/features/auth/view/login_page.dart';
 import 'package:mirror_original/features/home/view/home_page.dart';
+
+import '../../auth/view_model/auth_cubit.dart';
 
 
 class SplashPage extends StatefulWidget {
@@ -16,14 +22,33 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () async {
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(),
-        ),
-      );
+
+      if(FirebaseAuth.instance.currentUser != null)
+      {
+        await AuthCubit.get(context).getUserData();
+
+        if(AuthCubit.get(context).userModel!.isAdmin)
+        {
+          navigateAndFinish(context, AdminPage());
+        }
+        else
+        {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(),
+            ),
+          );
+        }
+      }
+      else
+      {
+        navigateAndFinish(context, LoginPage());
+      }
+
+
 
     });
   }

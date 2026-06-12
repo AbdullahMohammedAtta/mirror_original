@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mirror_original/core/utils/functions.dart';
+import 'package:mirror_original/features/auth/view/login_page.dart';
+import 'package:mirror_original/features/auth/view_model/auth_cubit.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -94,7 +97,31 @@ class ProfilePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: OutlinedButton.icon(
                   onPressed: () {
-                    // Add logout logic here
+                    AlertDialog(
+                      title: const Text(
+                        'Do you want to Logout',
+                      ),
+                      content: const Text(
+                        'Are you sure?',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            AuthCubit.get(context).logout();
+                            navigateAndFinish(context, LoginPage());
+                          },
+                          child: const Text(
+                            'Logout',
+                          ),
+                        ),
+                      ],
+                    );
                   },
                   icon: const Icon(Icons.logout, color: Color(0xFFD32F2F)),
                   label: const Text(
