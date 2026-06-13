@@ -5,6 +5,7 @@ import 'package:mirror_original/core/widgets/myDivider.dart';
 class FavouritePage extends StatelessWidget {
   const FavouritePage({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +19,7 @@ class FavouritePage extends StatelessWidget {
         ),
       ),
       body: ConditionalBuilder(
-          condition: true,
+          condition: false,
           fallback: (context) {
             return const Center(
               child: Column(

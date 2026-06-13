@@ -54,7 +54,7 @@ class homeBody extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 15),
-                      buildProductGrid(homeCubit.products),
+                      buildProductGrid(homeCubit.products,homeCubit),
                       const SizedBox(height: 30),
                     ],
                   ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mirror_original/features/home/Widgets/ProductCard.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
+import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 
-Widget buildProductGrid(List<ProductModel> products) {
+Widget buildProductGrid(List<ProductModel> products,HomeCubit homeCubit) {
 
   return GridView.builder(
     shrinkWrap: true,
@@ -15,7 +16,7 @@ Widget buildProductGrid(List<ProductModel> products) {
       mainAxisSpacing: 10,
     ),
     itemBuilder: (context, index) {
-      return buildProductCard(products[index],context);
+      return buildProductCard(products[index],homeCubit,context);
     },
   );
 }

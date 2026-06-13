@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mirror_original/core/services/cache_helper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
 import 'package:mirror_original/features/home/view/profuct_details.dart';
+import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 
 import '../../../core/widgets/myDivider.dart';
 
-Widget buildProductCard(ProductModel product,context) {
+Widget buildProductCard(ProductModel product, HomeCubit cubit, BuildContext context) {
+  final cubit = context.watch<HomeCubit>();
   return InkWell(
     onTap: (){
-
       navigateTo(context, ProductDetailPage(product));
     },
     child: Card(
@@ -86,15 +87,19 @@ Widget buildProductCard(ProductModel product,context) {
                     Spacer(),
                     CircleAvatar(
                       backgroundColor: Colors.grey.shade200,
-                      radius: 15,
-                      child:IconButton(onPressed: (){
-                      }, icon:  Icon(
-                        product.isFavorite
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: product.isFavorite ? Colors.red : Colors.black,
-                        size: 20,
-                      ), padding: EdgeInsets.zero,),
+                      child:IconButton(
+                        onPressed: () {
+                          cubit.toggleFavorite(product.id);
+                        },
+                        icon: Icon(
+                          cubit.favoriteIds.contains(product.id)
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: Colors.red,
+                          size: 25
+                        ),
+                      ),
+
                     ),
 
                   ],
