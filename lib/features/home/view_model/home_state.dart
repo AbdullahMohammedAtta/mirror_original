@@ -16,3 +16,22 @@ class GetProductsErrorState extends HomeState {
 
   GetProductsErrorState(this.error);
 }
+
+
+class GetFavoritesLoadingState extends HomeState {}
+
+class GetFavoritesSuccessState extends HomeState {}
+
+class GetFavoritesErrorState extends HomeState {
+  final String error;
+
+  GetFavoritesErrorState(this.error);
+}
+
+
+class ToggleFavoriteChangedState extends HomeState {}
+class ToggleFavoriteErrorState extends HomeState {
+  final String error;
+
+  ToggleFavoriteErrorState(this.error);
+}

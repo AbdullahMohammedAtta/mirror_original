@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/features/cart/view/cart_page.dart';
@@ -80,6 +81,96 @@ class HomeCubit extends Cubit<HomeState>{
       );
     }
   }
-  
 
+
+
+  Future<void> addToFavorite(String productId) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('favorites')
+        .doc(productId)
+        .set({
+      'productId': productId,
+    });
+  }
+
+
+
+  Future<void> removeFromFavorite(String productId) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('favorites')
+        .doc(productId)
+        .delete();
+  }
+
+
+
+
+
+  Set<String> favoriteIds = {};
+  Future<void> getFavorites() async {
+    //emit(GetFavoritesLoadingState());
+
+    try {
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('favorites')
+          .get();
+
+      favoriteIds = snapshot.docs
+          .map((e) => e['productId'] as String)
+          .toSet();
+
+      emit(GetFavoritesSuccessState());
+    } catch (e) {
+      emit(GetFavoritesErrorState(e.toString()));
+    }
+  }
+
+
+
+
+
+  Future<void> toggleFavorite(String productId) async {
+    try {
+      // 1. Update UI immediately (Optimistic Update)
+      if (favoriteIds.contains(productId)) {
+        favoriteIds.remove(productId);
+      } else {
+        favoriteIds.add(productId);
+      }
+
+      emit(ToggleFavoriteChangedState());
+
+      // 2. Sync with Firebase
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+
+      final userFavRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('favorites')
+          .doc(productId);
+
+      if (favoriteIds.contains(productId)) {
+        await userFavRef.set({
+          'productId': productId,
+        });
+      } else {
+        await userFavRef.delete();
+      }
+
+    } catch (e) {
+      emit(ToggleFavoriteErrorState(e.toString()));
+    }
+  }
 }
