@@ -116,25 +116,21 @@ class HomeCubit extends Cubit<HomeState>{
 
   Set<String> favoriteIds = {};
   Future<void> getFavorites() async {
-    //emit(GetFavoritesLoadingState());
+    favoriteIds.clear(); // ⭐ Very Important
 
-    try {
-      String uid = FirebaseAuth.instance.currentUser!.uid;
+    String uid = FirebaseAuth.instance.currentUser!.uid;
 
-      final snapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(uid)
-          .collection('favorites')
-          .get();
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('favorites')
+        .get();
 
-      favoriteIds = snapshot.docs
-          .map((e) => e['productId'] as String)
-          .toSet();
+    favoriteIds = snapshot.docs
+        .map((e) => e['productId'] as String)
+        .toSet();
 
-      emit(GetFavoritesSuccessState());
-    } catch (e) {
-      emit(GetFavoritesErrorState(e.toString()));
-    }
+    emit(GetFavoritesSuccessState());
   }
 
 
@@ -172,5 +168,11 @@ class HomeCubit extends Cubit<HomeState>{
     } catch (e) {
       emit(ToggleFavoriteErrorState(e.toString()));
     }
+  }
+
+
+
+  void clearFavorites() {
+    favoriteIds.clear();
   }
 }
