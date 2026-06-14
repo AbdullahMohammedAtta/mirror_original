@@ -57,6 +57,7 @@ class HomeCubit extends Cubit<HomeState>{
   List<ProductModel> products = [];
 
   Future<void> getProducts() async {
+    getFavorites();
     emit(GetProductsLoadingState());
 
     try {
@@ -117,6 +118,7 @@ class HomeCubit extends Cubit<HomeState>{
   Set<String> favoriteIds = {};
   Future<void> getFavorites() async {
     favoriteIds.clear(); // ⭐ Very Important
+    products.clear();
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 

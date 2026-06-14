@@ -8,7 +8,7 @@ import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import '../../../core/widgets/myDivider.dart';
 
 Widget buildProductCard(ProductModel product, HomeCubit cubit, BuildContext context) {
-  final cubit = context.watch<HomeCubit>();
+  final homeCubit = context.watch<HomeCubit>();
   return InkWell(
     onTap: (){
       navigateTo(context, ProductDetailPage(product));
@@ -87,16 +87,17 @@ Widget buildProductCard(ProductModel product, HomeCubit cubit, BuildContext cont
                     Spacer(),
                     CircleAvatar(
                       backgroundColor: Colors.grey.shade200,
-                      child:IconButton(
-                        onPressed: () {
-                          cubit.toggleFavorite(product.id);
+                      radius: 15,
+                      child:GestureDetector(
+                        onTap: (){
+                          homeCubit.toggleFavorite(product.id);
                         },
-                        icon: Icon(
-                          cubit.favoriteIds.contains(product.id)
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: Colors.red,
-                          size: 25
+                        child: Icon(
+                            cubit.favoriteIds.contains(product.id)
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: Colors.red,
+                            size: 22
                         ),
                       ),
 

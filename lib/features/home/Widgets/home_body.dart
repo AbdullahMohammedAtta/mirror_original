@@ -18,14 +18,18 @@ class homeBody extends StatelessWidget {
     var homeCubit = HomeCubit.get(context);
 
     return BlocConsumer<HomeCubit,HomeState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+
+      },
       builder: (context, state) {
         return ConditionalBuilder(
             condition: state is! GetProductsLoadingState,
             fallback: (context) => Center(child: CircularProgressIndicator()),
             builder: (context) {
               return RefreshIndicator(
-                onRefresh: (){return homeCubit.getProducts();},
+                onRefresh: (){
+                  return homeCubit.getProducts();
+                  },
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Column(

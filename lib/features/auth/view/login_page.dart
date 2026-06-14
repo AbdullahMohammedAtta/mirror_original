@@ -7,6 +7,7 @@ import 'package:mirror_original/features/auth/view/register_page.dart';
 import 'package:mirror_original/features/auth/view_model/auth_cubit.dart';
 import 'package:mirror_original/features/auth/view_model/auth_state.dart';
 import 'package:mirror_original/features/home/view/home_page.dart';
+import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 
 
 
@@ -29,6 +30,8 @@ class LoginPage extends StatelessWidget {
           }
           if(state is LoginSuccessState)
           {
+            context.read<HomeCubit>().getProducts();
+
             showToast(message: 'Logged in successfully', state: ToastState.success);
               navigateAndFinish(context, HomePage());
           }
@@ -168,6 +171,7 @@ class LoginPage extends StatelessWidget {
                                       if(formKey.currentState!.validate())
                                       {
                                         authCubit.login(email: emailController.text.trim(), password: passController.text.trim());
+
                                       }
                                     }
                                 ),
