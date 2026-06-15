@@ -84,6 +84,11 @@ class HomeCubit extends Cubit<HomeState>{
   }
 
 
+  List<ProductModel> get favoriteProducts {
+    return products.where(
+          (product) => favoriteIds.contains(product.id),
+    ).toList();
+  }
 
   Future<void> addToFavorite(String productId) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;

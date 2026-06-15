@@ -1,10 +1,14 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/widgets/myDivider.dart';
+import 'package:mirror_original/features/home/model/product_model.dart';
+import 'package:mirror_original/features/home/view_model/home_cubit.dart';
+import 'package:mirror_original/features/home/view_model/home_state.dart';
 
 class FavouritePage extends StatelessWidget {
-  const FavouritePage({super.key});
-
+  const FavouritePage(HomeCubit this.homeCubit, {super.key});
+  final HomeCubit homeCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -18,33 +22,26 @@ class FavouritePage extends StatelessWidget {
           ],
         ),
       ),
-      body: ConditionalBuilder(
-          condition: false,
-          fallback: (context) {
-            return const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Icon(Icons.favorite_border_rounded,size: 250,weight: 0.3,),
-                    ],
-                  ),
-                  Text(
-                    'No products in the wishlist !',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-          builder: (context) {
-            return CartBodyWidget();
-          },
+      body: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          return ConditionalBuilder(
+            condition: homeCubit.favoriteIds.isNotEmpty,
+            fallback: (context) {
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.favorite_border_rounded,size: 250),
+                    Text('No products in the wishlist !'),
+                  ],
+                ),
+              );
+            },
+            builder: (context) {
+              return CartBodyWidget(homeCubit);
+            },
+          );
+        },
       ),
     );
   }
@@ -52,7 +49,8 @@ class FavouritePage extends StatelessWidget {
 
 
 class CartBodyWidget extends StatelessWidget {
-  const CartBodyWidget({super.key});
+  const CartBodyWidget(HomeCubit this.homeCubit, {super.key, });
+  final HomeCubit homeCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +70,8 @@ class CartBodyWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          const Text(
-            '3 items in your collection',
+          Text(
+            '${homeCubit.favoriteIds.length} items in your collection',
             style: TextStyle(
               fontSize: 16,
               color: Colors.black54,
@@ -83,26 +81,25 @@ class CartBodyWidget extends StatelessWidget {
           myDivider(),
           const SizedBox(height: 20),
 
-          // Cart Items List
-          _buildCartItem(
-            name: 'Velocita Pro v2',
-            size: 'EU 42',
-            price: '\$240.00',
-            quantity: '1',
-          ),
-          const SizedBox(height: 24),
-          _buildCartItem(
-            name: 'AeroStrider Core',
-            size: 'EU 44',
-            price: '\$185.00',
-            quantity: '1',
-          ),
-          const SizedBox(height: 24),
-          _buildCartItem(
-            name: 'Crimson Surge',
-            size: 'EU 41',
-            price: '\$310.00',
-            quantity: '2',
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: homeCubit.favoriteProducts.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            itemBuilder: (context, index) {
+              final ProductModel product = homeCubit.favoriteProducts[index];
+
+              return _buildCartItem(
+                homeCubit: homeCubit,
+                product: product,
+                name: product.title,
+                image: product.mainImage,
+                size: '-',
+                price: '\$${product.price}',
+                quantity: '1',
+
+              );
+            },
           ),
 
           const SizedBox(height: 32),
@@ -117,9 +114,12 @@ class CartBodyWidget extends StatelessWidget {
   // Helper Widget for individual cart items
   Widget _buildCartItem({
     required String name,
+    required String image,
     required String size,
     required String price,
     required String quantity,
+    required ProductModel product,
+    required HomeCubit homeCubit,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,13 +132,7 @@ class CartBodyWidget extends StatelessWidget {
             color: const Color(0xFFEAEAEA),
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Center(
-            child: Icon(
-              Icons.snowshoeing, // Placeholder icon
-              color: Colors.grey.shade400,
-              size: 40,
-            ),
-          ),
+          child:Image.network(image,fit: BoxFit.cover,),
         ),
         const SizedBox(width: 16),
 
@@ -158,24 +152,20 @@ class CartBodyWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Icon(
+                  IconButton(
+                      onPressed: ()
+                  async {
+                    await homeCubit.toggleFavorite(product.id);
+                  },
+                      icon: Icon(
                     Icons.delete_outline,
                     color: Colors.black87,
                     size: 20,
-                  ),
+                  )),
                 ],
               ),
               const SizedBox(height: 4),
 
-              // Size
-              Text(
-                'SIZE: $size',
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.black54,
-                  letterSpacing: 0.5,
-                ),
-              ),
               const SizedBox(height: 12),
 
               // Price and Quantity Adjuster

@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/features/favourites/view/favourite_page.dart';
+import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 
-PreferredSizeWidget buildAppBar(context) {
+PreferredSizeWidget buildAppBar(context, HomeCubit homeCubit) {
   return AppBar(
     elevation: 0,
     backgroundColor: Colors.white,
@@ -26,7 +27,7 @@ PreferredSizeWidget buildAppBar(context) {
     actions: [
       IconButton(
         onPressed: () {
-          navigateTo(context, FavouritePage());
+          navigateTo(context, FavouritePage(homeCubit));
         },
         icon: const Icon(Icons.favorite_border_outlined, color: Colors.black),
       ),

@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthCubit(),
         ),
         BlocProvider(
-          create: (context) => HomeCubit()..getProducts(),
+          create: (context) => HomeCubit()..getProducts()
         ),
       ],
       child: MaterialApp(
