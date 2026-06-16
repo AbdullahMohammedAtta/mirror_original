@@ -90,31 +90,31 @@ class HomeCubit extends Cubit<HomeState>{
     ).toList();
   }
 
-  Future<void> addToFavorite(String productId) async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .collection('favorites')
-        .doc(productId)
-        .set({
-      'productId': productId,
-    });
-  }
-
-
-
-  Future<void> removeFromFavorite(String productId) async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .collection('favorites')
-        .doc(productId)
-        .delete();
-  }
+  // Future<void> addToFavorite(String productId) async {
+  //   String uid = FirebaseAuth.instance.currentUser!.uid;
+  //
+  //   await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(uid)
+  //       .collection('favorites')
+  //       .doc(productId)
+  //       .set({
+  //     'productId': productId,
+  //   });
+  // }
+  //
+  //
+  //
+  // Future<void> removeFromFavorite(String productId) async {
+  //   String uid = FirebaseAuth.instance.currentUser!.uid;
+  //
+  //   await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(uid)
+  //       .collection('favorites')
+  //       .doc(productId)
+  //       .delete();
+  // }
 
 
 
@@ -179,7 +179,24 @@ class HomeCubit extends Cubit<HomeState>{
 
 
 
-  void clearFavorites() {
-    favoriteIds.clear();
+  // void clearFavorites() {
+  //   favoriteIds.clear();
+  // }
+
+
+
+  int quantityCounter = 0;
+  void addQuantityCounter()
+  {
+    quantityCounter++;
+    emit(ChangeQuantityCounterState());
   }
+  void removeQuantityCounter()
+  {
+    quantityCounter--;
+    emit(ChangeQuantityCounterState());
+  }
+
+
+
 }

@@ -273,6 +273,7 @@ class AdminCubit extends Cubit<AdminStates> {
       emit(GetUsersSuccessState());
     } catch (e) {
       emit(GetUsersErrorState(e.toString()));
+      print(e.toString());
     }
   }
 

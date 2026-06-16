@@ -1,8 +1,10 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/core/widgets/myDivider.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
+import 'package:mirror_original/features/home/view/profuct_details.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
 
@@ -92,6 +94,7 @@ class CartBodyWidget extends StatelessWidget {
               return _buildCartItem(
                 homeCubit: homeCubit,
                 product: product,
+                context: context
               );
             },
           ),
@@ -109,79 +112,87 @@ class CartBodyWidget extends StatelessWidget {
   Widget _buildCartItem({
     required ProductModel product,
     required HomeCubit homeCubit,
+    context,
+
   }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Product Image Placeholder
-        Container(
-          width: 85,
-          height: 85,
-          decoration: BoxDecoration(
-            color: const Color(0xFFEAEAEA),
-            borderRadius: BorderRadius.circular(16),
+    return InkWell(
+      onTap: ()
+      {
+         navigateTo(context, ProductDetailPage(product));
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Product Image Placeholder
+          Container(
+            width: 85,
+            height: 85,
+            decoration: BoxDecoration(
+              color: const Color(0xFFEAEAEA),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child:Image.network(product.mainImage,fit: BoxFit.cover,),
           ),
-          child:Image.network(product.mainImage,fit: BoxFit.cover,),
-        ),
-        const SizedBox(width: 16),
+          const SizedBox(width: 16),
 
-        // Product Details
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title and Trash Icon
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    product.title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+          // Product Details
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title and Trash Icon
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      product.title,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                      onPressed: ()
-                  async {
-                    await homeCubit.toggleFavorite(product.id);
-                  },
-                      icon: Icon(
-                    Icons.delete_outline,
-                    color: Colors.black87,
-                    size: 20,
-                  )),
-                ],
-              ),
-              const SizedBox(height: 4),
+                    IconButton(
+                        onPressed: ()
+                    async {
+                      await homeCubit.toggleFavorite(product.id);
+                    },
+                        icon: Icon(
+                      Icons.delete_outline,
+                      color: Colors.black87,
+                      size: 20,
+                    )),
+                  ],
+                ),
+                const SizedBox(height: 4),
 
-              const SizedBox(height: 12),
+                const SizedBox(height: 12),
 
-              // Price and Quantity Adjuster
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "${product.price}",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                // Price and Quantity Adjuster
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${product.price}",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
 
-                  // Quantity Pill
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE8F0FE), // Light blue tint
-                      borderRadius: BorderRadius.circular(20),
+                    // Quantity Pill
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE8F0FE), // Light blue tint
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

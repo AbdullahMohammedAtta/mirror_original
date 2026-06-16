@@ -18,7 +18,7 @@ class ProductDetailPage extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           var homeCubit = HomeCubit.get(context);
-
+          int counter = 0;
           //this widget for make index = 0 when I back or pop from this page
           return PopScope(
             onPopInvokedWithResult: (didPop, result) {
@@ -77,9 +77,8 @@ class ProductDetailPage extends StatelessWidget {
                         child: SizedBox(
                           height: 150,
                           child: ListView.separated(
-            
                             scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
+                            //shrinkWrap: true,
                             itemBuilder: (context, index) {
             
                               return GestureDetector(
@@ -106,7 +105,7 @@ class ProductDetailPage extends StatelessWidget {
                                     ),
                                   )
                                 ),
-                              );;
+                              );
                             },
                             separatorBuilder: (context, index) => SizedBox(width: 3,),
                             itemCount: product.images.length+1,
@@ -173,26 +172,65 @@ class ProductDetailPage extends StatelessWidget {
                                         ),
                                       ),
                                       Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFE8F0FE), // Light blue tint
-                                            borderRadius: BorderRadius.circular(20),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                                          child: Row(
-                                            children: [
-                                              _buildQuantityBtn(Icons.remove, isDark: false),
-                                              const SizedBox(width: 16),
-                                              Text(
-                                                "5",
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey.shade200, // Light blue tint
+                                              borderRadius: BorderRadius.circular(20),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    if (homeCubit.quantityCounter > 0) {
+                                                      homeCubit.removeQuantityCounter();
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    width: 25,
+                                                    height: 25,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.transparent,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.remove,
+                                                      size: 16,
+                                                      color:  Colors.black54,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                              const SizedBox(width: 16),
-                                              _buildQuantityBtn(Icons.add, isDark: true),
-                                            ],
+                                                const SizedBox(width: 15),
+                                                Text(
+                                                  "${homeCubit.quantityCounter}",
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 16),
+                                                InkWell(
+                                                  onTap: (){
+                                                    homeCubit.addQuantityCounter();
+                                                  },
+                                                  child: Container(
+                                                    width: 25,
+                                                    height: 25,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.black,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.add,
+                                                      size: 16,
+                                                      color:  Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 8),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -381,18 +419,4 @@ class ProductDetailPage extends StatelessWidget {
 }
 
 
-Widget _buildQuantityBtn(IconData icon, {required bool isDark}) {
-  return Container(
-    width: 28,
-    height: 28,
-    decoration: BoxDecoration(
-      color: isDark ? Colors.black : Colors.transparent,
-      shape: BoxShape.circle,
-    ),
-    child: Icon(
-      icon,
-      size: 16,
-      color: isDark ? Colors.white : Colors.black54,
-    ),
-  );
-}
+

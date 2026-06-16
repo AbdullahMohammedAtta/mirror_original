@@ -35,3 +35,6 @@ class ToggleFavoriteErrorState extends HomeState {
 
   ToggleFavoriteErrorState(this.error);
 }
+
+
+class ChangeQuantityCounterState extends HomeState {}
