@@ -154,10 +154,18 @@ class ProductDetailPage extends StatelessWidget {
                                       color: Colors.grey.shade200,
                                       shape: BoxShape.circle,
                                     ),
-                                    child: IconButton(onPressed: (){}, icon: Icon(
-                                      Icons.favorite_border,
-                                      size: 28,
-                                    ),)
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        homeCubit.toggleFavorite(product.id);
+                                      },
+                                      child: Icon(
+                                          homeCubit.favoriteIds.contains(product.id)
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: Colors.red,
+                                          size: 28
+                                      ),
+                                    ),
                                 ),
                               ],
                             ),
