@@ -25,11 +25,28 @@ PreferredSizeWidget buildAppBar(context, HomeCubit homeCubit) {
       ],
     ),
     actions: [
-      IconButton(
-        onPressed: () {
-          navigateTo(context, FavouritePage(homeCubit));
-        },
-        icon: const Icon(Icons.favorite_border_outlined, color: Colors.black),
+      Stack(
+        children: [
+          IconButton(
+            onPressed: () {
+              navigateTo(context, FavouritePage(homeCubit));
+            },
+            icon: const Icon(Icons.favorite_border_outlined, color: Colors.black),
+          ),
+          if(homeCubit.favoriteIds.isNotEmpty)
+          Container(
+            decoration: BoxDecoration(
+              //borderRadius: BorderRadius.circular(100),
+              shape: BoxShape.circle,
+              color: Colors.red
+
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(7.0),
+              child: Text("${homeCubit.favoriteIds.length}",style: TextStyle(color: Colors.white,fontSize: 10,fontWeight: FontWeight.bold),),
+            ),
+          ),
+        ],
       ),
       const SizedBox(width: 10),
     ],
