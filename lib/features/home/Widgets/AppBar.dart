@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/features/favourites/view/favourite_page.dart';

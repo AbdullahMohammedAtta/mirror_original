@@ -78,26 +78,20 @@ class CartBodyWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          myDivider(),
+          //myDivider(),
           const SizedBox(height: 20),
 
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: homeCubit.favoriteProducts.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            separatorBuilder: (_, __) => myDivider(),
             itemBuilder: (context, index) {
               final ProductModel product = homeCubit.favoriteProducts[index];
 
               return _buildCartItem(
                 homeCubit: homeCubit,
                 product: product,
-                name: product.title,
-                image: product.mainImage,
-                size: '-',
-                price: '\$${product.price}',
-                quantity: '1',
-
               );
             },
           ),
@@ -113,11 +107,6 @@ class CartBodyWidget extends StatelessWidget {
 
   // Helper Widget for individual cart items
   Widget _buildCartItem({
-    required String name,
-    required String image,
-    required String size,
-    required String price,
-    required String quantity,
     required ProductModel product,
     required HomeCubit homeCubit,
   }) {
@@ -132,7 +121,7 @@ class CartBodyWidget extends StatelessWidget {
             color: const Color(0xFFEAEAEA),
             borderRadius: BorderRadius.circular(16),
           ),
-          child:Image.network(image,fit: BoxFit.cover,),
+          child:Image.network(product.mainImage,fit: BoxFit.cover,),
         ),
         const SizedBox(width: 16),
 
@@ -146,7 +135,7 @@ class CartBodyWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    name,
+                    product.title,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -173,7 +162,7 @@ class CartBodyWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    price,
+                    "${product.price}",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

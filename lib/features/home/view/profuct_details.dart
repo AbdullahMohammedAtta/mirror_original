@@ -120,13 +120,15 @@ class ProductDetailPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Column(
+                            SizedBox(
+                              height: MediaQuery.sizeOf(context).height*0.15,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text('${product.category}',
                                         style: TextStyle(
@@ -138,7 +140,7 @@ class ProductDetailPage extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 10),
                                       Text(
-                                        '${product.title}\n " ${product.brand} "',
+                                        '${product.title}\n"${product.brand}"',
                                         style: TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold,
@@ -147,30 +149,61 @@ class ProductDetailPage extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                ),
-                                Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: GestureDetector(
-                                      onTap: (){
-                                        homeCubit.toggleFavorite(product.id);
-                                      },
-                                      child: Icon(
-                                          homeCubit.favoriteIds.contains(product.id)
-                                              ? Icons.favorite
-                                              : Icons.favorite_border,
-                                          color: Colors.red,
-                                          size: 28
+                                  Column(
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey.shade200,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: GestureDetector(
+                                              onTap: (){
+                                                homeCubit.toggleFavorite(product.id);
+                                              },
+                                              child: Icon(
+                                                  homeCubit.favoriteIds.contains(product.id)
+                                                      ? Icons.favorite
+                                                      : Icons.favorite_border,
+                                                  color: Colors.red,
+                                                  size: 28
+                                              ),
+                                            ),
+                                        ),
                                       ),
-                                    ),
-                                ),
-                              ],
+                                      Expanded(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFE8F0FE), // Light blue tint
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                                          child: Row(
+                                            children: [
+                                              _buildQuantityBtn(Icons.remove, isDark: false),
+                                              const SizedBox(width: 16),
+                                              Text(
+                                                "5",
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 16),
+                                              _buildQuantityBtn(Icons.add, isDark: true),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(height: 16),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   '${product.price} Egp',
@@ -345,4 +378,21 @@ class ProductDetailPage extends StatelessWidget {
       ],
     );
   }
+}
+
+
+Widget _buildQuantityBtn(IconData icon, {required bool isDark}) {
+  return Container(
+    width: 28,
+    height: 28,
+    decoration: BoxDecoration(
+      color: isDark ? Colors.black : Colors.transparent,
+      shape: BoxShape.circle,
+    ),
+    child: Icon(
+      icon,
+      size: 16,
+      color: isDark ? Colors.white : Colors.black54,
+    ),
+  );
 }
