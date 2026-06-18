@@ -39,7 +39,7 @@ class CartBodyWidget extends StatelessWidget {
           ListView.separated(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              separatorBuilder: (context, index) => myDivider(),
+              separatorBuilder: (context, index) => Padding(padding: EdgeInsetsGeometry.all(8), child: myDivider()),
              itemBuilder: (context, index) {
 
               final cartItem = homeCubit.cartItems[index];
@@ -63,7 +63,7 @@ class CartBodyWidget extends StatelessWidget {
           const SizedBox(height: 32),
 
           // Divider
-          Divider(color: Colors.grey.shade300, thickness: 1),
+          myDivider(),
 
           const SizedBox(height: 24),
 

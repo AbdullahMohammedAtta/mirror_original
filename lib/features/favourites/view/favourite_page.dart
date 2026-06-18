@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/features/cart/widgets/cart_body.dart';
+import 'package:mirror_original/features/favourites/widgets/favourite_body.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
 
@@ -37,7 +38,7 @@ class FavouritePage extends StatelessWidget {
               );
             },
             builder: (context) {
-              return CartBodyWidget(homeCubit: homeCubit,);
+              return FavouriteBodyWidget(homeCubit: homeCubit,);
             },
           );
         },
