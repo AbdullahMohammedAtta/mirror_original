@@ -143,8 +143,6 @@ class HomeCubit extends Cubit<HomeState>{
 
 
 
-
-
   Future<void> toggleFavorite(String productId) async {
     try {
       // 1. Update UI immediately (Optimistic Update)
@@ -186,17 +184,47 @@ class HomeCubit extends Cubit<HomeState>{
 
 
 
-  int quantityCounter = 0;
-  void addQuantityCounter()
+  Future<void> increaseQuantity(String productId) async
   {
-    quantityCounter++;
-    emit(ChangeQuantityCounterState());
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final doc = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('cart')
+        .doc(productId);
+
+    await doc.update({
+      'quantity': FieldValue.increment(1),
+    });
+
+    getCart();
   }
-  void removeQuantityCounter()
+
+  Future<void> decreaseQuantity(
+      String productId,
+      int currentQuantity,
+      ) async
   {
-    quantityCounter--;
-    emit(ChangeQuantityCounterState());
+
+  if (currentQuantity <= 1) {
+    removeFromCart(productId);
+    return;
   }
+
+  final uid = FirebaseAuth.instance.currentUser!.uid;
+
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('cart')
+      .doc(productId)
+      .update({
+    'quantity': FieldValue.increment(-1),
+  });
+
+  getCart();
+}
 
 
 
@@ -221,30 +249,37 @@ class HomeCubit extends Cubit<HomeState>{
 
 
   Future<void> addToCart(String productId) async {
-    final uid = FirebaseAuth.instance.currentUser!.uid;
+    emit(AddToCartLoadingState());
 
-    final doc = FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .collection('cart')
-        .doc(productId);
+    try {
+      final uid = FirebaseAuth.instance.currentUser!.uid;
 
-    final snapshot = await doc.get();
+      final doc = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('cart')
+          .doc(productId);
 
-    if (snapshot.exists) {
-      int oldQuantity = snapshot.data()!['quantity'];
+      final snapshot = await doc.get();
 
-      await doc.update({
-        'quantity': oldQuantity + 1,
-      });
-    } else {
-      await doc.set({
-        'productId': productId,
-        'quantity': 1,
-        'addedAt': FieldValue.serverTimestamp(),
-      });
+      if (snapshot.exists) {
+        await doc.update({
+          'quantity': FieldValue.increment(1),
+        });
+      } else {
+        await doc.set({
+          'productId': productId,
+          'quantity': 1,
+          'addedAt': FieldValue.serverTimestamp(),
+        });
+      }
+
+      emit(AddToCartSuccessState());
+    } catch (e) {
+      emit(AddToCartErrorState(e.toString()));
     }
   }
+
   Future<void> removeFromCart(String productId) async {
     final uid = FirebaseAuth.instance.currentUser!.uid;
 

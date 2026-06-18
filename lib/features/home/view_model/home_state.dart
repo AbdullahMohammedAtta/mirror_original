@@ -40,5 +40,16 @@ class ToggleFavoriteErrorState extends HomeState {
 class ChangeQuantityCounterState extends HomeState {}
 
 
+// Add To Cart
+class AddToCartLoadingState extends HomeState {}
+class AddToCartSuccessState extends HomeState {}
+class AddToCartErrorState extends HomeState {
+  final String error;
+
+  AddToCartErrorState(this.error);
+}
+
+
+
 class GetCartSuccessState extends HomeState {}
 class RemoveCartSuccessState extends HomeState {}

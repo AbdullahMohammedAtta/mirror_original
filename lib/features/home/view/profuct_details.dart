@@ -15,7 +15,22 @@ class ProductDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit,HomeState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+
+          if (state is AddToCartSuccessState) {
+            showToast(
+              message: 'Added to cart successfully',
+              state: ToastState.success,
+            );
+          }
+
+          if (state is AddToCartErrorState) {
+            showToast(
+              message: state.error,
+              state: ToastState.error,
+            );
+          }
+        },
         builder: (context, state) {
           var homeCubit = HomeCubit.get(context);
           int counter = 0;
@@ -183,9 +198,9 @@ class ProductDetailPage extends StatelessWidget {
                                               children: [
                                                 InkWell(
                                                   onTap: () {
-                                                    if (homeCubit.quantityCounter > 0) {
-                                                      homeCubit.removeQuantityCounter();
-                                                    }
+                                                  //  if (homeCubit.quantityCounter > 0) {
+                                                   //   homeCubit.removeQuantityCounter();
+                                                    //}
                                                   },
                                                   child: Container(
                                                     width: 25,
@@ -203,7 +218,7 @@ class ProductDetailPage extends StatelessWidget {
                                                 ),
                                                 const SizedBox(width: 15),
                                                 Text(
-                                                  "${homeCubit.quantityCounter}",
+                                                  "{homeCubit.quantityCounter}",
                                                   style: const TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,
@@ -212,7 +227,7 @@ class ProductDetailPage extends StatelessWidget {
                                                 const SizedBox(width: 16),
                                                 InkWell(
                                                   onTap: (){
-                                                    homeCubit.addQuantityCounter();
+                                                  //  homeCubit.addQuantityCounter();
                                                   },
                                                   child: Container(
                                                     width: 25,
