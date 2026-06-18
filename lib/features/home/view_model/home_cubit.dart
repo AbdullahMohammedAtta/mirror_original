@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirror_original/features/cart/model/cart_model.dart';
 import 'package:mirror_original/features/cart/view/cart_page.dart';
 import 'package:mirror_original/features/home/Widgets/home_body.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
@@ -198,5 +199,65 @@ class HomeCubit extends Cubit<HomeState>{
   }
 
 
+
+
+
+  List<CartModel> cartItems = [];
+  Future<void> getCart() async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('cart')
+        .get();
+
+    cartItems = snapshot.docs
+        .map((e) => CartModel.fromJson(e.data()))
+        .toList();
+
+    emit(GetCartSuccessState());
+  }
+
+
+  Future<void> addToCart(String productId) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final doc = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('cart')
+        .doc(productId);
+
+    final snapshot = await doc.get();
+
+    if (snapshot.exists) {
+      int oldQuantity = snapshot.data()!['quantity'];
+
+      await doc.update({
+        'quantity': oldQuantity + 1,
+      });
+    } else {
+      await doc.set({
+        'productId': productId,
+        'quantity': 1,
+        'addedAt': FieldValue.serverTimestamp(),
+      });
+    }
+  }
+  Future<void> removeFromCart(String productId) async {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('cart')
+        .doc(productId)
+        .delete();
+
+    cartItems.removeWhere((e) => e.productId == productId);
+
+    emit(RemoveCartSuccessState());
+  }
 
 }
