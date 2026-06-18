@@ -183,7 +183,7 @@ class HomeCubit extends Cubit<HomeState>{
   // }
 
 
-
+  int currentQuantity = 0;
   Future<void> increaseQuantity(String productId) async
   {
     final uid = FirebaseAuth.instance.currentUser!.uid;
@@ -201,10 +201,7 @@ class HomeCubit extends Cubit<HomeState>{
     getCart();
   }
 
-  Future<void> decreaseQuantity(
-      String productId,
-      int currentQuantity,
-      ) async
+  Future<void> decreaseQuantity(String productId,) async
   {
 
   if (currentQuantity <= 1) {
@@ -275,6 +272,7 @@ class HomeCubit extends Cubit<HomeState>{
       }
 
       emit(AddToCartSuccessState());
+      getCart();
     } catch (e) {
       emit(AddToCartErrorState(e.toString()));
     }

@@ -2,12 +2,13 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:mirror_original/core/utils/functions.dart';
-import 'package:mirror_original/features/cart/widgets/buildQuantityBtn.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
 import 'package:mirror_original/features/home/view/profuct_details.dart';
+import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 
 Widget buildCartItem({
   required ProductModel product,
+  required HomeCubit homeCubit,
   required context,
   required String quantity,
   required String size,
@@ -19,7 +20,7 @@ Widget buildCartItem({
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Product Image Placeholder
+        // Product Image  & Placeholder
         Container(
           width: 85,
           height: 85,
@@ -36,7 +37,7 @@ Widget buildCartItem({
                   size: 40,
                 ),
                 builder: (context) {
-                  return Image.network(product.mainImage) ;
+                  return Image.network(product.mainImage,fit: BoxFit.cover,) ;
                 },
             ),
           ),
@@ -59,10 +60,15 @@ Widget buildCartItem({
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Icon(
-                    Icons.delete_outline,
-                    color: Colors.black87,
-                    size: 20,
+                  InkWell(
+                    onTap:(){
+                      homeCubit.removeFromCart(product.id);
+                    },
+                    child: const Icon(
+                      Icons.delete_outline,
+                      color: Colors.black87,
+                      size: 20,
+                    ),
                   ),
                 ],
               ),
@@ -98,20 +104,59 @@ Widget buildCartItem({
                       borderRadius: BorderRadius.circular(20),
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                    child: Row(
-                      children: [
-                        buildQuantityBtn(Icons.remove, isDark: false),
-                        const SizedBox(width: 16),
-                        Text(
-                          quantity,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200, // Light blue tint
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                            },
+                            child: Container(
+                              width: 25,
+                              height: 25,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.remove,
+                                size: 16,
+                                color:  Colors.black54,
+                              ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 16),
-                        buildQuantityBtn(Icons.add, isDark: true),
-                      ],
+                          const SizedBox(width: 15),
+                          Text(
+                            "0",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          InkWell(
+                            onTap: (){
+                              //  homeCubit.addQuantityCounter();
+                            },
+                            child: Container(
+                              width: 25,
+                              height: 25,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.add,
+                                size: 16,
+                                color:  Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

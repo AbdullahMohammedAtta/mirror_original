@@ -134,125 +134,53 @@ class ProductDetailPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: MediaQuery.sizeOf(context).height*0.15,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text('${product.category}',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.grey,
-                                          letterSpacing: 1.2,
-                                        ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('${product.category}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey,
+                                        letterSpacing: 1.2,
                                       ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        '${product.title}\n"${product.brand}"',
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                          height: 1.2,
-                                        ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      '${product.title}\n"${product.brand}"',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        height: 1.2,
                                       ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey.shade200,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: GestureDetector(
-                                              onTap: (){
-                                                homeCubit.toggleFavorite(product.id);
-                                              },
-                                              child: Icon(
-                                                  homeCubit.favoriteIds.contains(product.id)
-                                                      ? Icons.favorite
-                                                      : Icons.favorite_border,
-                                                  color: Colors.red,
-                                                  size: 28
-                                              ),
-                                            ),
+                                    ),
+                                  ],
+                                ),
+                                    Container(
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          shape: BoxShape.circle,
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey.shade200, // Light blue tint
-                                              borderRadius: BorderRadius.circular(20),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                  //  if (homeCubit.quantityCounter > 0) {
-                                                   //   homeCubit.removeQuantityCounter();
-                                                    //}
-                                                  },
-                                                  child: Container(
-                                                    width: 25,
-                                                    height: 25,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.transparent,
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Icon(
-                                                      Icons.remove,
-                                                      size: 16,
-                                                      color:  Colors.black54,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 15),
-                                                Text(
-                                                  "0",
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 16),
-                                                InkWell(
-                                                  onTap: (){
-                                                  //  homeCubit.addQuantityCounter();
-                                                  },
-                                                  child: Container(
-                                                    width: 25,
-                                                    height: 25,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.black,
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Icon(
-                                                      Icons.add,
-                                                      size: 16,
-                                                      color:  Colors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 8),
-                                              ],
-                                            ),
+                                        child: GestureDetector(
+                                          onTap: (){
+                                            homeCubit.toggleFavorite(product.id);
+                                          },
+                                          child: Icon(
+                                              homeCubit.favoriteIds.contains(product.id)
+                                                  ? Icons.favorite
+                                                  : Icons.favorite_border,
+                                              color: Colors.red,
+                                              size: 28
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                              ],
                             ),
                             const SizedBox(height: 16),
                             Row(

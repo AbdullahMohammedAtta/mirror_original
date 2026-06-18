@@ -49,6 +49,7 @@ class CartBodyWidget extends StatelessWidget {
               );
 
               return buildCartItem(
+                homeCubit: homeCubit,
                 context: context,
                 product: product,
                 quantity: '1',
