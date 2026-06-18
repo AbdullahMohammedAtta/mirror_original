@@ -37,7 +37,7 @@ class FavouritePage extends StatelessWidget {
               );
             },
             builder: (context) {
-              return CartBodyWidget();
+              return CartBodyWidget(homeCubit: homeCubit,);
             },
           );
         },

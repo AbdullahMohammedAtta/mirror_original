@@ -1,6 +1,9 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/features/cart/widgets/cart_body.dart';
+import 'package:mirror_original/features/home/view_model/home_cubit.dart';
+import 'package:mirror_original/features/home/view_model/home_state.dart';
 
 
 class CartPage extends StatelessWidget {
@@ -8,41 +11,47 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  ConditionalBuilder(
-        condition: true,
-        fallback: (context) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.shopping_cart_outlined,size: 200,),
-                const SizedBox(height: 10),
-                const Text('   Your cart is empty now!\nThank you for choosing us',style: TextStyle(fontSize: 16),),
-                const SizedBox(height: 15,),
-                // Container(
-                //   width: MediaQuery.of(context).size.width*0.8,
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.all(Radius.circular(15)),
-                //     color: Colors.black,
-                //   ),
-                //   child: MaterialButton(
-                //     onPressed: (){
-                //
-                //     },
-                //     child: const Text(
-                //       'Shop Now',
-                //       style: TextStyle(
-                //         color: Colors.white,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
+    return  BlocConsumer<HomeCubit,HomeState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          var homeCubit = HomeCubit.get(context);
+          return ConditionalBuilder(
+            condition: homeCubit.cartItems.isNotEmpty,
+            fallback: (context) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.shopping_cart_outlined,size: 200,),
+                    const SizedBox(height: 10),
+                    const Text('   Your cart is empty now!\nThank you for choosing us',style: TextStyle(fontSize: 16),),
+                    const SizedBox(height: 15,),
+                    // Container(
+                    //   width: MediaQuery.of(context).size.width*0.8,
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.all(Radius.circular(15)),
+                    //     color: Colors.black,
+                    //   ),
+                    //   child: MaterialButton(
+                    //     onPressed: (){
+                    //
+                    //     },
+                    //     child: const Text(
+                    //       'Shop Now',
+                    //       style: TextStyle(
+                    //         color: Colors.white,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
+              );
+            },
+            builder: (context) {
+              return CartBodyWidget(homeCubit: homeCubit,);
+            },
           );
-        },
-        builder: (context) {
-          return CartBodyWidget();
         },
     );
   }

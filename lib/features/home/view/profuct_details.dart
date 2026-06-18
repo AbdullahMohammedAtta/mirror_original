@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/utils/functions.dart';
@@ -33,7 +34,6 @@ class ProductDetailPage extends StatelessWidget {
         },
         builder: (context, state) {
           var homeCubit = HomeCubit.get(context);
-          int counter = 0;
           //this widget for make index = 0 when I back or pop from this page
           return PopScope(
             onPopInvokedWithResult: (didPop, result) {
@@ -218,7 +218,7 @@ class ProductDetailPage extends StatelessWidget {
                                                 ),
                                                 const SizedBox(width: 15),
                                                 Text(
-                                                  "{homeCubit.quantityCounter}",
+                                                  "0",
                                                   style: const TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,
@@ -351,13 +351,10 @@ class ProductDetailPage extends StatelessWidget {
             
               // 6. Bottom Add to Cart Button
               bottomNavigationBar: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    print(product.images);
-                    print(product.category);
-                    print(product.colors);
-                    print(product.sizes);
+                    homeCubit.addToCart(product.id);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
@@ -370,15 +367,19 @@ class ProductDetailPage extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(Icons.shopping_bag_outlined, size: 20),
                       SizedBox(width: 10),
-                      Text(
-                        'Add to Cart',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      ConditionalBuilder(
+                          condition: state is AddToCartLoadingState,
+                          fallback: (context) => Text(
+                            'Add to Cart',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          builder: (context) => SizedBox(height: 20,width: 20, child: CircularProgressIndicator(color: Colors.white,)),
                       ),
                     ],
                   ),
