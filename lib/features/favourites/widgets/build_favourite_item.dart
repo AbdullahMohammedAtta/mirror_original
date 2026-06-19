@@ -1,8 +1,6 @@
-// Helper Widget for individual cart items
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:mirror_original/core/utils/functions.dart';
-import 'package:mirror_original/features/cart/widgets/buildQuantityBtn.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
 import 'package:mirror_original/features/home/view/profuct_details.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
@@ -60,14 +58,15 @@ Widget buildFavouriteItem({
                     ),
                   ),
                   GestureDetector(
-                    onTap: ()
-                    {
+                    onTap: (){
                       homeCubit.toggleFavorite(product.id);
                     },
-                    child: const Icon(
-                      Icons.delete_outline,
-                      color: Colors.black87,
-                      size: 20,
+                    child: Icon(
+                        homeCubit.favoriteIds.contains(product.id)
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.red,
+                        size: 22
                     ),
                   ),
                 ],

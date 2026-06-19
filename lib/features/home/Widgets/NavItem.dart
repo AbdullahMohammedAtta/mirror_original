@@ -23,12 +23,32 @@ Widget buildNavItem(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: isSelected ? Colors.white : Colors.black),
+          Stack(
+            alignment: AlignmentGeometry.directional(-3.5, 0),
+            children: [
+              Icon(icon, color: isSelected ? Colors.white : Colors.black),
+              if(label == 'Cart' && homeCubit.cartItems.isNotEmpty)
+                  Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.red
+
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text("${homeCubit.cartItems.length}",
+                      style: TextStyle(color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold),),
+                  ),
+                )
+              ],
+          ),
           if (isSelected) ...[
             const SizedBox(height: 3),
             Text(
               label,
-              style: const TextStyle(color: Colors.white, fontSize: 11),
+              style: const TextStyle(color: Colors.white, fontSize: 13),
             ),
           ],
         ],
