@@ -298,10 +298,12 @@ class HomeCubit extends Cubit<HomeState>{
     if (text.trim().isEmpty) {
       searchProducts = [];
     } else {
+      final query = text.toLowerCase().trim();
+
       searchProducts = products.where((product) {
-        return product.title
-            .toLowerCase()
-            .contains(text.toLowerCase());
+        return product.title.toLowerCase().contains(query) ||
+            product.brand.toLowerCase().contains(query) ||
+            product.category.toLowerCase().contains(query);
       }).toList();
     }
 
