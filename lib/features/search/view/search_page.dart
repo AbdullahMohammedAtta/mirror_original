@@ -6,6 +6,7 @@ import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
 import 'package:mirror_original/features/search/widgets/buildFilterChip.dart';
 import 'package:mirror_original/features/search/widgets/buildRecentSearchItem.dart';
+import 'package:mirror_original/features/search/widgets/buildSearchItem.dart';
 
 import '../widgets/buildProductCard.dart';
 
@@ -143,19 +144,7 @@ class SearchPage extends StatelessWidget {
                     );
                     },
                   builder: (context) {
-                    return ListView.separated(
-                        shrinkWrap:true,
-                        physics: NeverScrollableScrollPhysics(),
-                        separatorBuilder: (context, index) => myDivider(),
-                        itemBuilder: (context, index) {
-                          final product = homeCubit.searchProducts[index];
-
-                          return Container(
-                            child: Text(product.title.toString()),
-                          );
-                        },
-                        itemCount: homeCubit.searchProducts.length,
-                    );
+                    return buildSearchItem(homeCubit);
                   },
               )
 
