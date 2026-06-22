@@ -293,4 +293,18 @@ class HomeCubit extends Cubit<HomeState>{
     emit(RemoveCartSuccessState());
   }
 
+  List<ProductModel> searchProducts = [];
+  void search(String text) {
+    if (text.trim().isEmpty) {
+      searchProducts = [];
+    } else {
+      searchProducts = products.where((product) {
+        return product.title
+            .toLowerCase()
+            .contains(text.toLowerCase());
+      }).toList();
+    }
+
+    emit(SearchSuccessState());
+  }
 }

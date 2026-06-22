@@ -53,3 +53,6 @@ class AddToCartErrorState extends HomeState {
 
 class GetCartSuccessState extends HomeState {}
 class RemoveCartSuccessState extends HomeState {}
+
+
+class SearchSuccessState extends HomeState {}
