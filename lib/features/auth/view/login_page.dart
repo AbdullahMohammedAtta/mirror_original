@@ -31,6 +31,7 @@ class LoginPage extends StatelessWidget {
           if(state is LoginSuccessState)
           {
             context.read<HomeCubit>().getProducts();
+            context.read<HomeCubit>().getCart();
 
             showToast(message: 'Logged in successfully', state: ToastState.success);
               navigateAndFinish(context, HomePage());

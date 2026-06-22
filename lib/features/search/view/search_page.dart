@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart';
+  import 'package:flutter/material.dart';
+import 'package:mirror_original/features/search/widgets/buildFilterChip.dart';
+import 'package:mirror_original/features/search/widgets/buildRecentSearchItem.dart';
+
+import '../widgets/buildProductCard.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -25,7 +29,7 @@ class SearchPage extends StatelessWidget {
                   'Search sneakers...',
                   style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
                 ),
-                icon:Icon(Icons.search,color: Colors.grey.shade500),
+                icon: Icon(Icons.search, color: Colors.grey.shade500),
               ),
             ),
           ),
@@ -36,11 +40,11 @@ class SearchPage extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _buildFilterChip('All Results', isSelected: true),
+                buildFilterChip('All Results', isSelected: true),
                 const SizedBox(width: 12),
-                _buildFilterChip('Price', hasDropdown: true),
+                buildFilterChip('Price', hasDropdown: true),
                 const SizedBox(width: 12),
-                _buildFilterChip('Brand', hasDropdown: true),
+                buildFilterChip('Brand', hasDropdown: true),
               ],
             ),
           ),
@@ -62,18 +66,19 @@ class SearchPage extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _buildProductCard(
+                buildProductCard(
                   tag: 'LIMITED EDITION',
                   title: 'Cloud Runner X',
                   price: '\$280.00',
                   imageColor: const Color(0xFFDFE1E0), // Placeholder color
                 ),
                 const SizedBox(width: 16),
-                _buildProductCard(
+                buildProductCard(
                   tag: 'NEW ARRIVAL',
                   title: 'Vortex Prime',
                   price: '\$310.00',
-                  imageColor: const Color(0xFF1E2226), // Placeholder color
+                  imageColor: const Color(0xFF1E2226),
+                  // Placeholder color
                   isDarkBackground: true,
                 ),
               ],
@@ -110,124 +115,13 @@ class SearchPage extends StatelessWidget {
           const SizedBox(height: 8),
 
           // Recent Search Items
-          _buildRecentSearchItem('Air Max Premium'),
+          buildRecentSearchItem('Air Max Premium'),
           Divider(color: Colors.grey.shade200, height: 1),
-          _buildRecentSearchItem('Suede Originals'),
+          buildRecentSearchItem('Suede Originals'),
         ],
       ),
     );
   }
 
-  // Helper Widget for Filter Chips
-  Widget _buildFilterChip(String label, {bool isSelected = false, bool hasDropdown = false}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      decoration: BoxDecoration(
-        color: isSelected ? Colors.black : Colors.transparent,
-        borderRadius: BorderRadius.circular(20),
-        border: isSelected ? null : Border.all(color: Colors.grey.shade300),
-      ),
-      child: Row(
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black87,
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-            ),
-          ),
-          if (hasDropdown) ...[
-            const SizedBox(width: 6),
-            const Icon(
-              Icons.keyboard_arrow_down,
-              size: 18,
-              color: Colors.black87,
-            ),
-          ]
-        ],
-      ),
-    );
-  }
 
-  // Helper Widget for Trending Products
-  Widget _buildProductCard({
-    required String tag,
-    required String title,
-    required String price,
-    required Color imageColor,
-    bool isDarkBackground = false,
-  }) {
-    return SizedBox(
-      width: 170,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image Container Placeholder
-          Container(
-            height: 170,
-            width: 170,
-            decoration: BoxDecoration(
-              color: imageColor,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Center(
-              child: Icon(
-                Icons.image_outlined,
-                color: isDarkBackground ? Colors.white30 : Colors.black26,
-                size: 40,
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            tag,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey,
-              letterSpacing: 0.8,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1A202C),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            price,
-            style: TextStyle(
-              fontSize: 15,
-              color: Colors.grey.shade700,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Helper Widget for Recent Search Rows
-  Widget _buildRecentSearchItem(String query) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Row(
-        children: [
-          const Icon(Icons.history, color: Colors.grey),
-          const SizedBox(width: 16),
-          Text(
-            query,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Color(0xFF1A202C),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
