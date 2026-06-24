@@ -21,24 +21,27 @@ Widget buildCartItem({
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Product Image  & Placeholder
-        Container(
-          width: 85,
-          height: 85,
-          decoration: BoxDecoration(
-            color: const Color(0xFFEAEAEA),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Center(
-            child: ConditionalBuilder(
-                condition: product.mainImage != '' ,
-                fallback: (context) => Icon(
-                  Icons.snowshoeing, // Placeholder icon
-                  color: Colors.grey.shade400,
-                  size: 40,
-                ),
-                builder: (context) {
-                  return Image.network(product.mainImage,fit: BoxFit.cover,) ;
-                },
+        ClipRRect(
+          borderRadius: BorderRadiusGeometry.circular(20),
+          child: Container(
+            width: 85,
+            height: 85,
+            decoration: BoxDecoration(
+              color: const Color(0xFFEAEAEA),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Center(
+              child: ConditionalBuilder(
+                  condition: product.mainImage != '' ,
+                  fallback: (context) => Icon(
+                    Icons.snowshoeing, // Placeholder icon
+                    color: Colors.grey.shade400,
+                    size: 40,
+                  ),
+                  builder: (context) {
+                    return Image.network(product.mainImage,fit: BoxFit.cover,) ;
+                  },
+              ),
             ),
           ),
         ),

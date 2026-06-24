@@ -25,10 +25,13 @@ Widget buildSearchItem(HomeCubit homeCubit)
             height: 150,
             child: Row(
               children: [
-                SizedBox(
-                    height: 120,
-                    width: 120,
-                    child: Image.network(product.mainImage,fit: BoxFit.cover,)
+                ClipRRect(
+                  borderRadius: BorderRadiusGeometry.circular(20),
+                  child: SizedBox(
+                      height: 120,
+                      width: 120,
+                      child: Image.network(product.mainImage,fit: BoxFit.cover,)
+                  ),
                 ),
                 SizedBox(width: 20,),
                 Column(
