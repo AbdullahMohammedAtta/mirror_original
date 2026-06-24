@@ -56,39 +56,38 @@ class SearchPage extends StatelessWidget {
                     return Column(
                       children: [
                         // Recent Searches Section Title
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Recent Searches',
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF1A202C),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                // Clear All Action
-                              },
-                              child: const Text(
-                                'Clear All',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-
-                        // Recent Search Items
-                        buildRecentSearchItem('Air Max Premium'),
-                        myDivider(),
-                        buildRecentSearchItem('Suede Originals'),
-
-                        const SizedBox(height: 32),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     const Text(
+                        //       'Recent Searches',
+                        //       style: TextStyle(
+                        //         fontSize: 22,
+                        //         fontWeight: FontWeight.bold,
+                        //         color: Color(0xFF1A202C),
+                        //       ),
+                        //     ),
+                        //     TextButton(
+                        //       onPressed: () {
+                        //         // Clear All Action
+                        //       },
+                        //       child: const Text(
+                        //         'Clear All',
+                        //         style: TextStyle(
+                        //           color: Colors.grey,
+                        //           fontWeight: FontWeight.w600,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // const SizedBox(height: 8),
+                        //
+                        // // Recent Search Items
+                        // buildRecentSearchItem('Air Max Premium'),
+                        // myDivider(),
+                        // buildRecentSearchItem('Suede Originals'),
+                        //const SizedBox(height: 32),
                         // Filters Row
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
