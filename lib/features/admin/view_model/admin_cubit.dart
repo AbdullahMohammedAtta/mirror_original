@@ -192,7 +192,7 @@ class AdminCubit extends Cubit<AdminStates> {
         title: product.title,
         description: product.description,
         brand: product.brand,
-        category: product.category,
+        categoryId: product.categoryId,
         price: product.price,
         oldPrice: product.oldPrice,
         discount: product.discount,

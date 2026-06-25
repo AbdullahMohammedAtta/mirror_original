@@ -303,7 +303,7 @@ class HomeCubit extends Cubit<HomeState>{
       searchProducts = products.where((product) {
         return product.title.toLowerCase().contains(query) ||
             product.brand.toLowerCase().contains(query) ||
-            product.category.toLowerCase().contains(query);
+            product.categoryId.toLowerCase().contains(query);
       }).toList();
     }
 

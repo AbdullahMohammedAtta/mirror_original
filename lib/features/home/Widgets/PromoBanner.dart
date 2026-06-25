@@ -32,7 +32,7 @@ Widget buildPromoBanner() {
     options: CarouselOptions(
       height: 180,
       autoPlay: true,
-      autoPlayInterval: const Duration(seconds: 3),
+      autoPlayInterval: const Duration(seconds: 6),
       enlargeCenterPage: true,
       viewportFraction: 1,
     ),

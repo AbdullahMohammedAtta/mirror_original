@@ -101,7 +101,7 @@ class AdminPage extends StatelessWidget {
 
                           DashboardCard(
                             title: "Orders",
-                            value: "54",
+                            value: "0",
                             icon: Icons.receipt_long,
                           ),
 
@@ -119,7 +119,7 @@ class AdminPage extends StatelessWidget {
 
                           DashboardCard(
                             title: "Revenue",
-                            value: "\$12K",
+                            value: "\$0",
                             icon: Icons.attach_money,
                           ),
                         ],

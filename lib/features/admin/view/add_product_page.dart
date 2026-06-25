@@ -148,7 +148,7 @@ class AddProductScreen extends StatelessWidget {
                                     title: titleController.text.trim(),
                                     description: descriptionController.text.trim(),
                                     brand: brandController.text.trim(),
-                                    category: categoryController.text.trim(),
+                                    categoryId: categoryController.text.trim(),
                                     price: double.tryParse(priceController.text,) ?? 0,
                                     oldPrice: oldPriceController.text.isEmpty ? null : double.tryParse(oldPriceController.text,),
                                     discount: int.tryParse(discountController.text,) ?? 0,

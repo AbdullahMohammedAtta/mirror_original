@@ -5,7 +5,7 @@ class ProductModel {
   final String title;
   final String description;
   final String brand;
-  final String category;
+  final String categoryId;
 
   // Pricing
   final double price;
@@ -38,7 +38,7 @@ class ProductModel {
     required this.title,
     required this.description,
     required this.brand,
-    required this.category,
+    required this.categoryId,
     required this.price,
     required this.oldPrice,
     required this.discount,
@@ -61,7 +61,7 @@ class ProductModel {
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       brand: json['brand'] ?? '',
-      category: json['category'] ?? '',
+      categoryId: json['categoryId'] ?? json['category'] ?? '',
       price: (json['price'] ?? 0).toDouble(),
       oldPrice: json['oldPrice'] != null
           ? (json['oldPrice']).toDouble()
@@ -87,7 +87,7 @@ class ProductModel {
       'title': title,
       'description': description,
       'brand': brand,
-      'category': category,
+      'categoryId': categoryId,
       'price': price,
       'oldPrice': oldPrice,
       'discount': discount,

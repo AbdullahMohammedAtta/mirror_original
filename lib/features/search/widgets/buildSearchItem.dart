@@ -38,7 +38,7 @@ Widget buildSearchItem(HomeCubit homeCubit)
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(product.category,style: TextStyle(),),
+                    Text(product.categoryId,style: TextStyle(),),
                     Text(product.title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
                     Text(product.brand,style: TextStyle(color: Color.fromRGBO(
                         90, 90, 90, 1.0),fontSize: 15,),),
