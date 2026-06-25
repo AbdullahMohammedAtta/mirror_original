@@ -29,7 +29,7 @@ class AdminPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (_) => BlocProvider(
-                        create: (_) => AdminCubit(),
+                        create: (_) => AdminCubit()..getCategories(),
                         child: AddProductScreen(),
                       ),
                     ),

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mirror_original/features/admin/view_model/admin_states.dart';
 import 'package:mirror_original/features/auth/model/user_model.dart';
+import 'package:mirror_original/features/home/model/category_model.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
 
 class AdminCubit extends Cubit<AdminStates> {
@@ -254,6 +255,30 @@ class AdminCubit extends Cubit<AdminStates> {
     }
   }
 
+
+
+  void changeCategory()
+  {
+    emit(AdminChangeCategoryState());
+  }
+  String? selectedCategoryId;
+  List<CategoryModel> categories = [];
+  Future<void> getCategories() async {
+    final value = await FirebaseFirestore.instance
+        .collection('categories')
+        .get();
+
+    categories = value.docs
+        .map(
+          (e) => CategoryModel.fromJson(
+        e.data(),
+      ),
+    )
+        .toList();
+
+    emit(AdminGetCategoriesSuccessState());
+    print(categories.length);
+  }
 
 
   List<UserModel> users = [];

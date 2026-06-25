@@ -80,10 +80,20 @@ class AddProductScreen extends StatelessWidget {
                         brandController,
                         "Brand",
                       ),
-                      buildField(
-                        categoryController,
-                        "Category",
-                      ),
+                      DropdownButtonFormField<String>(
+                        value: adminCubit.selectedCategoryId,
+                        hint: Text('Select Category'),
+                        items: adminCubit.categories.map((category) {
+                          return DropdownMenuItem(
+                            value: category.id,
+                            child: Text(category.name),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          adminCubit.selectedCategoryId = value;
+                          adminCubit.changeCategory();
+                        },
+                      )
                     ],
                   ),
 
@@ -148,7 +158,7 @@ class AddProductScreen extends StatelessWidget {
                                     title: titleController.text.trim(),
                                     description: descriptionController.text.trim(),
                                     brand: brandController.text.trim(),
-                                    categoryId: categoryController.text.trim(),
+                                    categoryId: adminCubit.selectedCategoryId ?? '',
                                     price: double.tryParse(priceController.text,) ?? 0,
                                     oldPrice: oldPriceController.text.isEmpty ? null : double.tryParse(oldPriceController.text,),
                                     discount: int.tryParse(discountController.text,) ?? 0,
