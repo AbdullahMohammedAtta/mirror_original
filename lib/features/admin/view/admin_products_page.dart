@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/widgets/myDivider.dart';
+import 'package:mirror_original/features/admin/view/add_product_page.dart';
 import 'package:mirror_original/features/admin/view_model/admin_cubit.dart';
 
 class AdminProductsPage extends StatelessWidget {
@@ -14,6 +16,22 @@ class AdminProductsPage extends StatelessWidget {
         title: Text('All Products'),
         centerTitle: true,
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                create: (_) => AdminCubit()..getCategories(),
+                child: AddProductScreen(),
+              ),
+            ),
+          );
+        },
+        icon: const Icon(Icons.add),
+        label: const Text('Add Product'),
+      ),
+
       body: SingleChildScrollView(
         child: ListView.separated(
           shrinkWrap: true,

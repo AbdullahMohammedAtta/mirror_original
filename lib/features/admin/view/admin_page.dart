@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/core/widgets/myButton.dart';
-import 'package:mirror_original/features/admin/view/add_product_page.dart';
+import 'package:mirror_original/features/admin/view/admin_category_page.dart';
 import 'package:mirror_original/features/admin/view/admin_products_page.dart';
 import 'package:mirror_original/features/admin/view/users_page.dart';
 import 'package:mirror_original/features/admin/view_model/admin_cubit.dart';
@@ -16,28 +16,13 @@ class AdminPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => AdminCubit()..getProducts()..getUsers(),
+        create: (context) => AdminCubit()..getProducts()..getUsers()..getCategories(),
       child: BlocConsumer<AdminCubit,AdminStates>(
           listener: (context, state) {},
           builder: (context, state) {
               var adminCubit = AdminCubit.get(context);
             return Scaffold(
               backgroundColor: const Color(0xffF5F7FA),
-              floatingActionButton: FloatingActionButton.extended(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BlocProvider(
-                        create: (_) => AdminCubit()..getCategories(),
-                        child: AddProductScreen(),
-                      ),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.add),
-                label: const Text('Add Product'),
-              ),
               body: SafeArea(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(18),
@@ -186,9 +171,14 @@ class AdminPage extends StatelessWidget {
                           const SizedBox(width: 12),
 
                           Expanded(
-                            child: ActionButton(
-                              title: "Categories",
-                              icon: Icons.category,
+                            child: GestureDetector(
+                              onTap: (){
+                                navigateTo(context, AdminCategoryPage(adminCubit: adminCubit,));
+                              },
+                              child: ActionButton(
+                                title: "Categories",
+                                icon: Icons.category,
+                              ),
                             ),
                           ),
                         ],
