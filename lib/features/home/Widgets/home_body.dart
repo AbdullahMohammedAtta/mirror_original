@@ -42,6 +42,7 @@ class homeBody extends StatelessWidget {
                       const SizedBox(height: 15),
                       myDivider(),
                       const SizedBox(height: 15),
+                      if(homeCubit.categories != [])
                       buildCategories(),
                       const SizedBox(height: 25),
                       Row(

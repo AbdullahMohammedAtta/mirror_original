@@ -10,12 +10,11 @@ Widget buildCategories() {
       builder: (context, state) {
         var homeCubit = HomeCubit.get(context);
         return SizedBox(
-          height: 50,
+          height: 250,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               bool isSelected = homeCubit.selectedCategoriesIndex == index;
-
               return GestureDetector(
                 onTap: () {
                   homeCubit.changeCategories(index);
@@ -27,14 +26,22 @@ Widget buildCategories() {
                     color: isSelected ? Colors.black : const Color(0xFFF2F2F2),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Center(
-                    child: Text(
-                      homeCubit.categories[index].name.toString(),
-                      style: TextStyle(
-                        color: isSelected ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.w600,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Image.network(homeCubit.categories[index].image),
                       ),
-                    ),
+                      Center(
+                        child: Text(
+                          homeCubit.categories[index].name.toString(),
+                          style: TextStyle(
+                            color: isSelected ? Colors.white : Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );
