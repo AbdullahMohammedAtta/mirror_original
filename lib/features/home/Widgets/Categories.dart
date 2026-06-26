@@ -29,7 +29,7 @@ Widget buildCategories() {
                   ),
                   child: Center(
                     child: Text(
-                      homeCubit.categories[index],
+                      homeCubit.categories[index].name.toString(),
                       style: TextStyle(
                         color: isSelected ? Colors.white : Colors.black,
                         fontWeight: FontWeight.w600,

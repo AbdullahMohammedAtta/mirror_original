@@ -29,7 +29,6 @@ class AdminPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       const Text(
                         "Admin Dashboard",
                         style: TextStyle(

@@ -56,3 +56,4 @@ class RemoveCartSuccessState extends HomeState {}
 
 
 class SearchSuccessState extends HomeState {}
+class GetCategoriesSuccessState extends HomeState {}

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/features/cart/model/cart_model.dart';
 import 'package:mirror_original/features/cart/view/cart_page.dart';
 import 'package:mirror_original/features/home/Widgets/home_body.dart';
+import 'package:mirror_original/features/home/model/category_model.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
 import 'package:mirror_original/features/profile/view/profile_page.dart';
@@ -17,7 +18,7 @@ class HomeCubit extends Cubit<HomeState>{
 
 
 
-  List<String> categories = ['All', 'Running', 'Lifestyle'];
+  List<CategoryModel> categories = [];
   int selectedCategoriesIndex = 0;
 
   void changeCategories(int index)
@@ -25,6 +26,29 @@ class HomeCubit extends Cubit<HomeState>{
     selectedCategoriesIndex = index;
     emit(ChangeCatState());
   }
+
+
+
+  Future<void> getCategories() async {
+    final value = await FirebaseFirestore.instance
+        .collection('categories')
+        .get();
+
+    categories = value.docs
+        .map(
+          (e) => CategoryModel.fromJson(
+        e.data(),
+      ),
+    )
+        .toList();
+
+    emit(GetCategoriesSuccessState());
+    print(categories.length);
+  }
+
+
+
+
 
   List<Widget> screens = [
     homeBody(),
