@@ -8,6 +8,8 @@ import 'package:mirror_original/features/admin/view/admin_products_page.dart';
 import 'package:mirror_original/features/admin/view/users_page.dart';
 import 'package:mirror_original/features/admin/view_model/admin_cubit.dart';
 import 'package:mirror_original/features/admin/view_model/admin_states.dart';
+import 'package:mirror_original/features/admin/widgets/ActionButton.dart';
+import 'package:mirror_original/features/admin/widgets/DashboardCard.dart';
 import 'package:mirror_original/features/home/view/home_page.dart';
 
 class AdminPage extends StatelessWidget {
@@ -199,88 +201,4 @@ class AdminPage extends StatelessWidget {
 }
 
 
-class DashboardCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final IconData icon;
 
-  const DashboardCard({
-    super.key,
-    required this.title,
-    required this.value,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-
-                Icon(
-                  icon,
-                  size: 35,
-                ),
-
-                Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-                Text(title),
-              ],
-        )
-      );
-  }
-}
-
-class ActionButton extends StatelessWidget {
-  final String title;
-  final IconData icon;
-
-  const ActionButton({
-    super.key,
-    required this.title,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 110,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Column(
-        mainAxisAlignment:
-        MainAxisAlignment.center,
-        children: [
-
-          Icon(
-            icon,
-            size: 35,
-          ),
-
-          const SizedBox(height: 10),
-
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

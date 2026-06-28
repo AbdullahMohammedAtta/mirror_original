@@ -1,7 +1,6 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mirror_original/features/cart/widgets/cart_body.dart';
 import 'package:mirror_original/features/favourites/widgets/favourite_body.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
