@@ -3,8 +3,12 @@ import 'package:mirror_original/core/widgets/myDivider.dart';
 import 'package:mirror_original/features/admin/view_model/admin_cubit.dart';
 
 class AdminCategoryPage extends StatelessWidget {
-  const AdminCategoryPage({super.key, required this.adminCubit});
+  AdminCategoryPage({super.key, required this.adminCubit});
   final AdminCubit adminCubit;
+  var formKey = GlobalKey<FormState>();
+
+
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +16,31 @@ class AdminCategoryPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('All Categories'),
         centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          scaffoldKey.currentState!.showBottomSheet((context) =>
+              Container(
+                color: Colors.grey[100],
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(),
+                        TextFormField(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            elevation: 20,
+          );
+        },
+        icon: const Icon(Icons.add),
+        label: const Text('Add Category'),
       ),
       body: ListView.separated(
           separatorBuilder: (context, index) => myDivider(),

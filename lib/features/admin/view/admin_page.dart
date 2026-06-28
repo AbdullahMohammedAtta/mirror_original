@@ -174,7 +174,15 @@ class AdminPage extends StatelessWidget {
                           Expanded(
                             child: GestureDetector(
                               onTap: (){
-                                navigateTo(context, AdminCategoryPage(adminCubit: adminCubit,));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => BlocProvider(
+                                      create: (_) => AdminCubit()..getCategories(),
+                                      child: AdminCategoryPage(adminCubit: adminCubit),
+                                    ),
+                                  ),
+                                );
                               },
                               child: ActionButton(
                                 title: "Categories",
