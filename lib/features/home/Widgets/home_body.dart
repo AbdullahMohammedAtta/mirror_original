@@ -18,9 +18,7 @@ class homeBody extends StatelessWidget {
     var homeCubit = HomeCubit.get(context);
 
     return BlocConsumer<HomeCubit,HomeState>(
-      listener: (context, state) {
-
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
             condition: state is! GetProductsLoadingState,
@@ -44,7 +42,7 @@ class homeBody extends StatelessWidget {
                       const SizedBox(height: 15),
                       if(homeCubit.categories != [])
                       buildCategories(),
-                      const SizedBox(height: 25),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
