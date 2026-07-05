@@ -10,39 +10,34 @@ Widget buildCategories() {
       builder: (context, state) {
         var homeCubit = HomeCubit.get(context);
         return SizedBox(
-          height: 250,
+          height: MediaQuery.sizeOf(context).height*0.24,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              bool isSelected = homeCubit.selectedCategoriesIndex == index;
+              //bool isSelected = homeCubit.selectedCategoriesIndex == index;
               return GestureDetector(
                 onTap: () {
-                  homeCubit.changeCategories(index);
+                  //homeCubit.changeCategories(index);
                 },
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  padding: const EdgeInsets.symmetric(horizontal: 22),
-                  decoration: BoxDecoration(
-                    color: isSelected ? Colors.black : const Color(0xFFF2F2F2),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Image.network(homeCubit.categories[index].image),
-                      ),
-                      Center(
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadiusGeometry.circular(20),
+                        child: Image.network(homeCubit.categories[index].image,fit: BoxFit.cover,)),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
                         child: Text(
                           homeCubit.categories[index].name.toString(),
                           style: TextStyle(
-                            color: isSelected ? Colors.white : Colors.black,
+                            color: Colors.black,
                             fontWeight: FontWeight.w600,
+                            fontSize: 18,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },

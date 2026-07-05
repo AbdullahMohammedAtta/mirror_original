@@ -19,13 +19,13 @@ class HomeCubit extends Cubit<HomeState>{
 
 
   List<CategoryModel> categories = [];
-  int selectedCategoriesIndex = 0;
-
-  void changeCategories(int index)
-  {
-    selectedCategoriesIndex = index;
-    emit(ChangeCatState());
-  }
+  // int selectedCategoriesIndex = 0;
+  //
+  // void changeCategories(int index)
+  // {
+  //   selectedCategoriesIndex = index;
+  //   emit(ChangeCatState());
+  // }
 
 
 
