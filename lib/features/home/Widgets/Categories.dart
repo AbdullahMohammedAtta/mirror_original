@@ -24,16 +24,14 @@ Widget buildCategories() {
                     ClipRRect(
                       borderRadius: BorderRadiusGeometry.circular(20),
                         child: Image.network(homeCubit.categories[index].image,fit: BoxFit.cover,)),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          homeCubit.categories[index].name.toString(),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        homeCubit.categories[index].name.toString(),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
                         ),
                       ),
                     ),
