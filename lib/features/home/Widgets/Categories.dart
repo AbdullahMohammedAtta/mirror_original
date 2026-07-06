@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
-
 import '../view_model/home_cubit.dart';
 
 Widget buildCategories() {
