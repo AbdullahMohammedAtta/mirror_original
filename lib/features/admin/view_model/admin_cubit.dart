@@ -1,6 +1,6 @@
-import 'dart:io';
 import 'dart:convert';
-import 'dart:math';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -339,55 +339,14 @@ class AdminCubit extends Cubit<AdminStates> {
   }
 
 
-  Future<String?> uploadCategoryImage() async {
-    if (categoryImage == null) return null;
-
-    try {
-      var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-          'https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload',
-        ),
-      );
-
-      request.fields['upload_preset'] = 'YOUR_UPLOAD_PRESET';
-
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'file',
-          categoryImage!.path,
-        ),
-      );
-
-      var response = await request.send();
-
-      if (response.statusCode == 200) {
-        var responseData = await response.stream.bytesToString();
-        var data = jsonDecode(responseData);
-
-        return data['secure_url'];
-      } else {
-        return null;
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-      return null;
-    }
-  }
 
 
-  Future<void> addCategory({
-    required String name,
-  }) async {
+  Future<void> addCategory({required String name,}) async {
     emit(AddCategoryLoadingState());
 
     try {
-      String? imageUrl = await uploadCategoryImage();
+      String? imageUrl = await uploadImageToCloudinary(categoryImage!);
 
-      if (imageUrl == null) {
-        emit(AddCategoryErrorState('Please select image'));
-        return;
-      }
 
       DocumentReference doc = FirebaseFirestore.instance
           .collection('categories')
@@ -403,7 +362,9 @@ class AdminCubit extends Cubit<AdminStates> {
 
       emit(AddCategorySuccessState());
     } catch (e) {
+      print(e);
       emit(AddCategoryErrorState(e.toString()));
+
     }
   }
 }

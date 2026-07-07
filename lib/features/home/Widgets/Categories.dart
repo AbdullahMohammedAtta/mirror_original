@@ -20,9 +20,13 @@ Widget buildCategories() {
                 },
                 child: Column(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadiusGeometry.circular(20),
-                        child: Image.network(homeCubit.categories[index].image,fit: BoxFit.cover,)),
+                    Container(
+                      width: 200,
+                      height: MediaQuery.sizeOf(context).height*0.19,
+                      child: ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(20),
+                          child: Image.network(homeCubit.categories[index].image,fit: BoxFit.cover,)),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Text(

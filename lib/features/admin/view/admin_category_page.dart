@@ -129,34 +129,37 @@ class AdminCategoryPage extends StatelessWidget {
         icon: const Icon(Icons.add),
         label: const Text("Add Category"),
       ),
-      body: ListView.separated(
-          separatorBuilder: (context, index) => myDivider(),
-          itemBuilder: (context, index) {
-            return SizedBox(
-              height: 150,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadiusGeometry.circular(20),
-                        child: Image.network(adminCubit.categories[index].image,fit: BoxFit.cover,)),
-                    SizedBox(width: 20,),
-                    Text(adminCubit.categories[index].name,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                    Spacer(),
-                    Column(
-                      children: [
-                        IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
-                        Spacer(),
-                        IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
-                      ],
-                    ),
-                  ],
+      body: Container(
+        height: MediaQuery.sizeOf(context).height*0.9,
+        child: ListView.separated(
+            separatorBuilder: (context, index) => myDivider(),
+            itemBuilder: (context, index) {
+              return SizedBox(
+                height: 150,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadiusGeometry.circular(20),
+                          child: Image.network(adminCubit.categories[index].image,fit: BoxFit.cover,)),
+                      SizedBox(width: 20,),
+                      Text(adminCubit.categories[index].name,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                      Spacer(),
+                      Column(
+                        children: [
+                          IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+                          Spacer(),
+                          IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-          itemCount: adminCubit.categories.length,
+              );
+            },
+            itemCount: adminCubit.categories.length,
+        ),
       ),
     );
   }
