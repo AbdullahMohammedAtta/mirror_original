@@ -19,24 +19,92 @@ class AdminCategoryPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          scaffoldKey.currentState!.showBottomSheet((context) =>
-              Container(
-                color: Colors.grey[100],
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextFormField(),
-                        TextFormField(),
-                      ],
-                    ),
+          // scaffoldKey.currentState!.showBottomSheet((context) =>
+          //     Container(
+          //       color: Colors.grey[100],
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(10.0),
+          //         child: Form(
+          //           key: formKey,
+          //           child: Column(
+          //             mainAxisSize: MainAxisSize.min,
+          //             children: [
+          //               TextFormField(),
+          //               TextFormField(),
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   elevation: 20,
+          // );
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Container(
+                padding: const EdgeInsets.all(10),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          // Pick Image
+                        },
+                        child: Container(
+                          width: 200,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          // child: adminCubit.categoryImage == null
+                          //     ? const Icon(
+                          //   Icons.add_a_photo,
+                          //   size: 40,
+                          // )
+                          //     : ClipRRect(
+                           // borderRadius: BorderRadius.circular(15),
+                            // child: Image.file(
+                            //  // adminCubit.categories[index].image,
+                            //   fit: BoxFit.cover,
+                            // ),
+                          //),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: TextFormField(
+                          //controller: categoryNameController,
+                          decoration: const InputDecoration(
+                            labelText: 'Category Name',
+                            prefixIcon: Icon(Icons.category),
+                          ),
+                          validator: (value) {
+                            if (value!.trim().isEmpty) {
+                              return 'Please enter category name';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            // Upload Image
+                            // Save Category
+                          },
+                          icon: const Icon(Icons.add),
+                          label: const Text('Add Category'),
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              ),
-            elevation: 20,
+              );
+            },
           );
         },
         icon: const Icon(Icons.add),
