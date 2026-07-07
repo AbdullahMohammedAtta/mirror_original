@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
+import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -302,4 +304,106 @@ class AdminCubit extends Cubit<AdminStates> {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+  File? categoryImage;
+
+  final ImagePicker picker = ImagePicker();
+  Future<void> pickCategoryImage() async {
+    final pickedImage = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 80,
+    );
+
+    if (pickedImage != null) {
+      categoryImage = File(pickedImage.path);
+      emit(PickCategoryImageSuccessState());
+    } else {
+      emit(PickCategoryImageErrorState());
+    }
+  }
+
+
+  void removeCategoryImage() {
+    categoryImage = null;
+    emit(RemovedCategoryImageState());
+  }
+
+
+  Future<String?> uploadCategoryImage() async {
+    if (categoryImage == null) return null;
+
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+          'https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload',
+        ),
+      );
+
+      request.fields['upload_preset'] = 'YOUR_UPLOAD_PRESET';
+
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'file',
+          categoryImage!.path,
+        ),
+      );
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        var responseData = await response.stream.bytesToString();
+        var data = jsonDecode(responseData);
+
+        return data['secure_url'];
+      } else {
+        return null;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      return null;
+    }
+  }
+
+
+  Future<void> addCategory({
+    required String name,
+  }) async {
+    emit(AddCategoryLoadingState());
+
+    try {
+      String? imageUrl = await uploadCategoryImage();
+
+      if (imageUrl == null) {
+        emit(AddCategoryErrorState('Please select image'));
+        return;
+      }
+
+      DocumentReference doc = FirebaseFirestore.instance
+          .collection('categories')
+          .doc();
+
+      await doc.set({
+        'id': doc.id,
+        'name': name,
+        'image': imageUrl,
+      });
+
+      categoryImage = null;
+
+      emit(AddCategorySuccessState());
+    } catch (e) {
+      emit(AddCategoryErrorState(e.toString()));
+    }
+  }
 }

@@ -48,3 +48,21 @@ class GetUsersErrorState extends AdminStates {
 
   GetUsersErrorState(this.error);
 }
+
+
+class PickCategoryImageSuccessState extends AdminStates {}
+
+class PickCategoryImageErrorState extends AdminStates {}
+
+class RemovedCategoryImageState extends AdminStates {}
+
+class AddCategoryLoadingState extends AdminStates {}
+
+class AddCategorySuccessState extends AdminStates {}
+
+class AddCategoryErrorState extends AdminStates {
+  final String error;
+
+  AddCategoryErrorState(this.error);
+}
+
