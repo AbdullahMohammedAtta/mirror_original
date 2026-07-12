@@ -3,11 +3,11 @@ import 'package:mirror_original/features/home/Widgets/ProductCard.dart';
 import 'package:mirror_original/features/home/model/product_model.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 
-Widget buildProductGrid(List<ProductModel> products,HomeCubit homeCubit) {
+Widget buildProductGrid(List<ProductModel> products,HomeCubit homeCubit,{ScrollPhysics physics = const NeverScrollableScrollPhysics()}) {
 
   return GridView.builder(
     shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
+    physics: physics,
     itemCount: products.length,
     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
       maxCrossAxisExtent: 220,
