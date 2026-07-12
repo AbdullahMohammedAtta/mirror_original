@@ -1,10 +1,12 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirror_original/core/utils/functions.dart';
 import 'package:mirror_original/core/widgets/myDivider.dart';
 import 'package:mirror_original/features/home/Widgets/Categories.dart';
 import 'package:mirror_original/features/home/Widgets/ProductGrid.dart';
 import 'package:mirror_original/features/home/Widgets/PromoBanner.dart';
+import 'package:mirror_original/features/home/view/product_list_page.dart';
 import 'package:mirror_original/features/home/view_model/home_cubit.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
 
@@ -50,9 +52,14 @@ class homeBody extends StatelessWidget {
                             'Trending Now',
                             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            'View All',
-                            style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
+                          InkWell(
+                            onTap: (){
+                              navigateTo(context, ProductListPage());
+                            },
+                            child: Text(
+                              'View All',
+                              style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
+                            ),
                           ),
                         ],
                       ),
