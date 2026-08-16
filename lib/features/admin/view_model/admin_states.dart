@@ -38,6 +38,8 @@ class DeleteProductErrorState extends AdminStates {
 
 
 class AdminGetCategoriesSuccessState extends AdminStates {}
+class AdminDeleteCategorySuccessState extends AdminStates {}
+
 class AdminChangeCategoryState extends AdminStates {}
 
 

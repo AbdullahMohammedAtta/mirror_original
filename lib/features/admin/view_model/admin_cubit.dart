@@ -263,6 +263,7 @@ class AdminCubit extends Cubit<AdminStates> {
   {
     emit(AdminChangeCategoryState());
   }
+
   String? selectedCategoryId;
   List<CategoryModel> categories = [];
   Future<void> getCategories() async {
@@ -280,6 +281,21 @@ class AdminCubit extends Cubit<AdminStates> {
 
     emit(AdminGetCategoriesSuccessState());
     print(categories.length);
+  }
+
+
+
+  Future<void> deleteCategory(String categoryId) async {
+    await FirebaseFirestore.instance
+        .collection('categories')
+        .doc(categoryId)
+        .delete();
+
+    categories.removeWhere(
+          (category) => category.id == categoryId,
+    );
+
+    emit(AdminDeleteCategorySuccessState());
   }
 
 
