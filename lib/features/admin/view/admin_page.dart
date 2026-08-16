@@ -20,7 +20,12 @@ class AdminPage extends StatelessWidget {
     return BlocProvider(
         create: (context) => AdminCubit()..getProducts()..getUsers()..getCategories(),
       child: BlocConsumer<AdminCubit,AdminStates>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if(state is AdminDeleteCategorySuccessState)
+              {
+               showToast(message: 'Category Deleted Successfully ', state: ToastState.success);
+              }
+          },
           builder: (context, state) {
               var adminCubit = AdminCubit.get(context);
             return Scaffold(

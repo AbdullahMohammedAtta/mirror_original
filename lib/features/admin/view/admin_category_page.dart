@@ -150,7 +150,10 @@ class AdminCategoryPage extends StatelessWidget {
                         children: [
                           IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
                           Spacer(),
-                          IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+                          IconButton(onPressed: (){
+                            adminCubit.deleteCategory(adminCubit.categories[index].id);
+
+                          }, icon: Icon(Icons.delete)),
                         ],
                       ),
                     ],
