@@ -151,8 +151,36 @@ class AdminCategoryPage extends StatelessWidget {
                           IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
                           Spacer(),
                           IconButton(onPressed: (){
-                            adminCubit.deleteCategory(adminCubit.categories[index].id);
-
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text(
+                                    'Delete Category',
+                                  ),
+                                  content: const Text(
+                                    'Are you sure?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        adminCubit.deleteCategory(adminCubit.categories[index].id);
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        'Delete',
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           }, icon: Icon(Icons.delete)),
                         ],
                       ),
