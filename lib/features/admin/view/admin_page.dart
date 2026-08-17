@@ -25,6 +25,10 @@ class AdminPage extends StatelessWidget {
               {
                showToast(message: 'Category Deleted Successfully ', state: ToastState.success);
               }
+            if(state is DeleteProductSuccessState)
+            {
+              showToast(message: 'Product Deleted Successfully ', state: ToastState.success);
+            }
           },
           builder: (context, state) {
               var adminCubit = AdminCubit.get(context);
