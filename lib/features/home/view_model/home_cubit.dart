@@ -147,7 +147,7 @@ class HomeCubit extends Cubit<HomeState>{
 
   Set<String> favoriteIds = {};
   Future<void> getFavorites() async {
-    favoriteIds.clear(); // ⭐ Very Important
+    favoriteIds.clear();
     products.clear();
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -158,9 +158,25 @@ class HomeCubit extends Cubit<HomeState>{
         .collection('favorites')
         .get();
 
-    favoriteIds = snapshot.docs
-        .map((e) => e['productId'] as String)
-        .toSet();
+    for (var doc in snapshot.docs) {
+      final productId = doc['productId'] as String;
+
+      final productSnapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .doc(productId)
+          .get();
+
+      if (productSnapshot.exists) {
+        favoriteIds.add(productId);
+
+        products.add(
+          ProductModel.fromJson(productSnapshot.data()!),
+        );
+      } else {
+        // المنتج اتحذف من الـ Admin
+        await doc.reference.delete();
+      }
+    }
 
     emit(GetFavoritesSuccessState());
   }
@@ -261,9 +277,23 @@ class HomeCubit extends Cubit<HomeState>{
         .collection('cart')
         .get();
 
-    cartItems = snapshot.docs
-        .map((e) => CartModel.fromJson(e.data()))
-        .toList();
+    cartItems.clear();
+
+    for (var doc in snapshot.docs) {
+      final cartItem = CartModel.fromJson(doc.data());
+
+      final productSnapshot = await FirebaseFirestore.instance
+          .collection('products')
+          .doc(cartItem.productId)
+          .get();
+
+      if (productSnapshot.exists) {
+        cartItems.add(cartItem);
+      } else {
+        // المنتج اتحذف من الـ Admin
+        await doc.reference.delete();
+      }
+    }
 
     emit(GetCartSuccessState());
   }
