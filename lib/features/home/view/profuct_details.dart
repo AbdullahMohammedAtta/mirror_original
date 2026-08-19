@@ -34,6 +34,7 @@ class ProductDetailPage extends StatelessWidget {
         },
         builder: (context, state) {
           var homeCubit = HomeCubit.get(context);
+          int categoryIdIndex = homeCubit.categories.indexWhere((category) => category.id == product.categoryId,);
           //this widget for make index = 0 when I back or pop from this page
           return PopScope(
             onPopInvokedWithResult: (didPop, result) {
@@ -142,7 +143,7 @@ class ProductDetailPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('${product.categoryId}',
+                                    Text('${homeCubit.categories[categoryIdIndex].name}',
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
