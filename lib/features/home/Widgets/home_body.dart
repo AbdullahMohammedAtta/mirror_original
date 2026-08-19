@@ -19,13 +19,31 @@ class homeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     var homeCubit = HomeCubit.get(context);
 
+
+
+
     return BlocConsumer<HomeCubit,HomeState>(
       listener: (context, state) {},
       builder: (context, state) {
+
+
+
+
         return ConditionalBuilder(
-            condition: state is! GetProductsLoadingState,
+            condition: state is! GetProductsLoadingState ,
             fallback: (context) => Center(child: CircularProgressIndicator()),
             builder: (context) {
+
+              // Find Trending category
+              final trendingCategory = homeCubit.categories.firstWhere(
+                    (category) => category.name == 'Trending',
+              );
+
+              // Get only products that belong to Trending
+              final trendingProducts = homeCubit.products
+                  .where((product) => product.categoryId == trendingCategory.id)
+                  .toList();
+
               return RefreshIndicator(
                 onRefresh: (){
                   return homeCubit.getProducts();
@@ -69,7 +87,7 @@ class homeBody extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 15),
-                      buildProductGrid(homeCubit.products,homeCubit),
+                      buildProductGrid(trendingProducts,homeCubit),
                       const SizedBox(height: 30),
                     ],
                   ),

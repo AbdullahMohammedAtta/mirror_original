@@ -7,21 +7,13 @@ Widget buildProductGrid(
     List<ProductModel> products,
     HomeCubit homeCubit, {
       ScrollPhysics physics = const NeverScrollableScrollPhysics(),
-    }) {
-  // Find Trending category
-  final trendingCategory = homeCubit.categories.firstWhere(
-        (category) => category.name == 'Trending',
-  );
-
-  // Get only products that belong to Trending
-  final trendingProducts = products
-      .where((product) => product.categoryId == trendingCategory.id)
-      .toList();
+    })
+{
 
   return GridView.builder(
     shrinkWrap: true,
     physics: physics,
-    itemCount: trendingProducts.length,
+    itemCount: products.length,
     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
       maxCrossAxisExtent: 220,
       childAspectRatio: 0.56,
@@ -30,7 +22,7 @@ Widget buildProductGrid(
     ),
     itemBuilder: (context, index) {
       return buildProductCard(
-        trendingProducts[index],
+        products[index],
         homeCubit,
         context,
       );

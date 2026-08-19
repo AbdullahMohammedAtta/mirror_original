@@ -43,7 +43,7 @@ class HomeCubit extends Cubit<HomeState>{
         .toList();
 
     emit(GetCategoriesSuccessState());
-    print(categories.length);
+    //print(categories.length);
   }
 
 
