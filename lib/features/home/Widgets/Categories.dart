@@ -8,7 +8,8 @@ Widget buildCategories() {
       listener: (context, state) {},
       builder: (context, state) {
         var homeCubit = HomeCubit.get(context);
-        return SizedBox(
+        if(homeCubit.categories != [])
+          return SizedBox(
           height: MediaQuery.sizeOf(context).height*0.24,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
@@ -46,6 +47,9 @@ Widget buildCategories() {
             itemCount: homeCubit.categories.length,
           ),
         );
+        else{
+          return SizedBox(height: 1,);
+        }
       },
   );
 }

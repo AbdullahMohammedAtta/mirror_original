@@ -42,8 +42,13 @@ class homeBody extends StatelessWidget {
                       const SizedBox(height: 15),
                       myDivider(),
                       const SizedBox(height: 15),
-                      if(homeCubit.categories != [])
-                      buildCategories(),
+                      if(homeCubit.categories != [] || homeCubit.categories.length != 0)
+                        Text(
+                          'Our Collection',
+                          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                      if(homeCubit.categories != [] || homeCubit.categories.length != 0)
+                        buildCategories(),
                       const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
