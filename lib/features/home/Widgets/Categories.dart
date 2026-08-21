@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirror_original/core/utils/functions.dart';
+import 'package:mirror_original/features/home/view/product_list_page.dart';
 import 'package:mirror_original/features/home/view_model/home_state.dart';
 import '../view_model/home_cubit.dart';
 
@@ -14,10 +16,12 @@ Widget buildCategories() {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              //bool isSelected = homeCubit.selectedCategoriesIndex == index;
+              final category = homeCubit.categories[index];
+
               return GestureDetector(
                 onTap: () {
-                  //homeCubit.changeCategories(index);
+                  navigateTo(context, ProductListPage(categoryId: category.id,
+                    categoryName: category.name,));
                 },
                 child: Column(
                   children: [
