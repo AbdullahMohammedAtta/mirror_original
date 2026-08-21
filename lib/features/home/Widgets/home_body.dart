@@ -65,6 +65,7 @@ class homeBody extends StatelessWidget {
                           'Our Collection',
                           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                         ),
+                      const SizedBox(height: 15),
                       if(homeCubit.categories != [] || homeCubit.categories.length != 0)
                         buildCategories(),
                       const SizedBox(height: 15),
